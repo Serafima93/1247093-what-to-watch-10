@@ -6,7 +6,7 @@ import axios, {
 } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 import { getToken } from './token';
-import { processErrorHandle } from './process-error-handle';
+import { toast } from 'react-toastify';
 
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
@@ -38,7 +38,7 @@ export const createAPI = (): AxiosInstance => {
     (response) => response,
     (error: AxiosError) => {
       if (error.response && shouldDisplayError(error.response)) {
-        processErrorHandle(error.response.data.error);
+        toast.warn(error.response.data.error);
       }
 
       throw error;
@@ -47,44 +47,3 @@ export const createAPI = (): AxiosInstance => {
 
   return api;
 };
-// import axios, {
-
-//   AxiosResponse,
-//   AxiosError
-// } from 'axios';
-
-// enum HttpCode {
-//   Unauthorized = 401,
-// }
-
-// type UnauthorizedCallback = () => void; //не помню что это
-
-// export const createAPI = (onUnauthorized: UnauthorizedCallback): AxiosInstance => {
-//   const api = axios.create({
-//     baseURL: BACKEND_URL,
-//     timeout: REQUEST_TIMEOUT,
-//   });
-
-//   api.interceptors.response.use(
-//     (response: AxiosResponse) => response,
-//     (error: AxiosError) => {
-//       const { response } = error;
-//       if (response?.status === HttpCode.Unauthorized) {
-//         return onUnauthorized();
-//       }
-//       return Promise.reject(error);
-//     },
-//   );
-
-//   api.interceptors.request.use((config: AxiosRequestConfig) => {
-//     const token = getToken();
-
-//     if (token) {
-//       config.headers['x-token'] = token;
-//     }
-
-//     return config;
-//   });
-
-//   return api;
-// };

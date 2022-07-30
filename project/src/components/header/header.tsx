@@ -1,28 +1,28 @@
 import Logo from '../logo/logo';
-import { Link } from 'react-router-dom';
+import UserBlock from '../user-block/user-block';
+import LoginAvatar from '../user-block/login-avatar';
+import { useAppSelector } from '../../hooks';
+import { AuthorizationStatus } from '../../const';
 
 function Header(): JSX.Element {
-  return (
-    <header className="page-header film-card__head">
-      <Logo />
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
 
-      <ul className="user-block">
-        <li className="user-block__item">
-          <div className="user-block__avatar">
-            <img
-              src="img/avatar.jpg"
-              alt="User avatar"
-              width="63"
-              height="63"
-            />
-          </div>
-        </li>
-        <li className="user-block__item">
-          <Link className="user-block__link" to="#">
-            Sign out
-          </Link>
-        </li>
-      </ul>
+  return (
+    <header
+      className={
+        authorizationStatus !== AuthorizationStatus.Auth
+          ? 'page-header'
+          : 'page-header film-card__head'
+      }
+    >
+      <Logo />
+      {authorizationStatus !== AuthorizationStatus.Auth ? (
+        <LoginAvatar />
+      ) : (
+        <UserBlock />
+      )}
     </header>
   );
 }

@@ -4,19 +4,23 @@ import Footer from '../../components/footer/footer';
 import FilmList from '../../components/film-list/film-list';
 import GenreList from '../../components/genre-list/genre-list';
 import ShowMoreButton from '../../components/show-more/show-more';
-import { useAppSelector} from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { useState } from 'react';
 
 function MainScreen(): JSX.Element {
   const filmsFromState = useAppSelector((state) => state.filmListFromState);
   const genreListFromState = useAppSelector((state) => state.allFilmsList);
-  const filmCard = useAppSelector((state) => state.filmCard);
-  const buttonConditionFromState = useAppSelector((state) => state.LoadMoreFilms);
+  const buttonConditionFromState = useAppSelector(
+    (state) => state.LoadMoreFilms
+  );
   const incFilmsLength = useAppSelector((state) => state.MaxFilms);
   const minFilmsLength = useAppSelector((state) => state.MinFilms);
 
+  // const filmCard = filmsFromState[0];
 
-  const [isVisibleFilmButton, setVisibleFilmButton] = useState(buttonConditionFromState);
+  const [isVisibleFilmButton, setVisibleFilmButton] = useState(
+    buttonConditionFromState
+  );
   if (isVisibleFilmButton !== buttonConditionFromState) {
     setVisibleFilmButton((prevState) => !prevState);
   }
@@ -26,15 +30,19 @@ function MainScreen(): JSX.Element {
       <section className="film-card">
         <div className="film-card__bg">
           <img
+            src="img/bg-header.jpg"
+            alt="The Grand Budapest Hotel"
+          />
+          {/* <img
             src={filmCard.backgroundImage}
             alt={filmCard.name}
-          />
+          /> */}
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
         <Header />
 
-        <div className="film-card__wrap">
+        {/* <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
               <img
@@ -75,7 +83,7 @@ function MainScreen(): JSX.Element {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </section>
 
       <div className="page-content">
@@ -84,7 +92,11 @@ function MainScreen(): JSX.Element {
 
           <GenreList filmsList={genreListFromState} />
 
-          <FilmList filmsFromState={filmsFromState} MaxFilms={incFilmsLength} MinFilms={minFilmsLength} />
+          <FilmList
+            filmsFromState={filmsFromState}
+            MaxFilms={incFilmsLength}
+            MinFilms={minFilmsLength}
+          />
           {isVisibleFilmButton && <ShowMoreButton />}
         </section>
         <Footer />

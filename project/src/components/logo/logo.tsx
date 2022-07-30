@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { resetFilms } from '../../store/actions';
+import { AppRoute } from '../../const';
 
 function Logo(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -9,7 +10,7 @@ function Logo(): JSX.Element {
     <div className="logo">
       <Link
         className="logo__link"
-        to="/"
+        to={AppRoute.Main}
         onClick={() => {
           dispatch(resetFilms());
         }}
