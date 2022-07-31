@@ -6,10 +6,10 @@ type GenreListProps = {
 };
 
 function GenreList(props: GenreListProps): JSX.Element {
-  const { filmsList} = props;
+  const { filmsList } = props;
 
   let filmGenreArray: string[] = ['All genres'];
-  filmsList.forEach((item: typeof filmsList[0]) => {
+  filmsList.forEach((item: FilmStructure) => {
     filmGenreArray.push(item.genre);
   });
   filmGenreArray = [...new Set(filmGenreArray)];
@@ -18,10 +18,11 @@ function GenreList(props: GenreListProps): JSX.Element {
     <>
       <ul className="catalog__genres-list">
         {filmGenreArray.map((item) => (
-          <Genre filmGenre={item} key={item + 1} />
+          <Genre filmGenre={item} key={item} />
         ))}
       </ul>
       {}
+      {/* это реакт хак, когда Fragment не работает */}
     </>
   );
 }

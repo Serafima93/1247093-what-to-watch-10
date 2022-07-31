@@ -3,27 +3,40 @@ import UserBlock from '../user-block/user-block';
 import LoginAvatar from '../user-block/login-avatar';
 import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../const';
+import { FilmStructure } from '../../types/films';
 
-function Header(): JSX.Element {
+type HeaderProps = {
+  filmCard: FilmStructure;
+};
+
+function Header(props: HeaderProps): JSX.Element {
+  const {filmCard} = props;
   const authorizationStatus = useAppSelector(
     (state) => state.authorizationStatus
   );
+  // const filmCard = useAppSelector(
+  //   (state) => state.filmExample
+  // ) as FilmStructure;
+
+  const checkStatus = authorizationStatus !== AuthorizationStatus.Auth;
 
   return (
-    <header
-      className={
-        authorizationStatus !== AuthorizationStatus.Auth
-          ? 'page-header'
-          : 'page-header film-card__head'
-      }
-    >
-      <Logo />
-      {authorizationStatus !== AuthorizationStatus.Auth ? (
-        <LoginAvatar />
-      ) : (
-        <UserBlock />
-      )}
-    </header>
+    <>
+      <div className="film-card__bg">
+        <img
+          src={checkStatus ? 'img/bg-header.jpg' : filmCard.backgroundImage}
+          alt={filmCard.name}
+        />
+      </div>
+
+      <h1 className="visually-hidden">WTW</h1>
+      <header
+        className={checkStatus ? 'page-header' : 'page-header film-card__head'}
+      >
+        <Logo />
+        {checkStatus ? <LoginAvatar /> : <UserBlock />}
+      </header>
+    </>
   );
 }
 

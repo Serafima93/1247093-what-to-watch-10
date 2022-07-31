@@ -11,7 +11,7 @@ function ShowMoreButton(): JSX.Element {
   const incFilmsLength = useAppSelector((state) => state.MaxFilms);
   const minFilmsLength = useAppSelector((state) => state.MinFilms);
 
-
+  //насчет зависимостей, у меня линтер начинает орать
   useEffect(() => {
     if (
       filmsFromState.length > minFilmsLength &&

@@ -3,8 +3,9 @@ import Header from '../../components/header/header';
 import Tabs from '../../components/tabs/tabs';
 import Footer from '../../components/footer/footer';
 import FilmCard from '../../components/film-card/film-card';
+import Buttons from '../../components/buttons/buttons';
 import { FilmStructure } from '../../types/films';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { FilmsCountForView } from '../../const';
 
@@ -12,7 +13,6 @@ type FilmProps = {
   filmsList: FilmStructure[];
 };
 function Film(props: FilmProps): JSX.Element {
-  const navigate = useNavigate();
   const { filmsList } = props;
   const params = useParams();
   const filmExample = filmsList.find(
@@ -30,13 +30,7 @@ function Film(props: FilmProps): JSX.Element {
     <>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
-          <div className="film-card__bg">
-            <img src={filmExample.previewImage} alt={filmExample.name} />
-          </div>
-
-          <h1 className="visually-hidden">WTW</h1>
-
-          <Header />
+          <Header filmCard={filmExample} />
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
@@ -47,26 +41,7 @@ function Film(props: FilmProps): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button
-                  className="btn btn--play film-card__button"
-                  type="button"
-                  onClick={() => navigate(`/player/${filmExample.id}`)}
-                >
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button
-                  className="btn btn--list film-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
+                <Buttons filmExample={filmExample} />
                 <a href="add-review.html" className="btn film-card__button">
                   Add review
                 </a>

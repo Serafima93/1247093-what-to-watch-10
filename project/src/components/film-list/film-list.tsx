@@ -3,16 +3,16 @@ import { FilmStructure } from '../../types/films';
 
 type FilmListScreenProps = {
   filmsFromState: FilmStructure[];
-  MaxFilms: number;
-  MinFilms: number;
+  maxFilms: number;
+  minFilms: number;
 };
 
 function FilmList(props: FilmListScreenProps): JSX.Element {
-  const { filmsFromState, MinFilms, MaxFilms } = props;
+  const { filmsFromState, minFilms, maxFilms } = props;
 
   return (
     <div className="catalog__films-list">
-      {filmsFromState.slice(MinFilms, MaxFilms).map((film: FilmStructure) => (
+      {filmsFromState.slice(minFilms, maxFilms).map((film: FilmStructure) => (
         <FilmCard filmCard={film} key={film.id + 1} />
       ))}
     </div>
