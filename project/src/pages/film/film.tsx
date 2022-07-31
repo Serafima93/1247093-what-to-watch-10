@@ -7,7 +7,7 @@ import Buttons from '../../components/buttons/buttons';
 import { FilmStructure } from '../../types/films';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
-import { FilmsCountForView } from '../../const';
+import { FilmsCountForView, AuthorizationStatus } from '../../const';
 
 type FilmProps = {
   filmsList: FilmStructure[];
@@ -20,6 +20,9 @@ function Film(props: FilmProps): JSX.Element {
   ) as FilmStructure;
 
   const filmListFromState = useAppSelector((state) => state.filmListFromState);
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
   //потом доделаю чтобы не появлялся в похожих карточках сама карточка,
   // пока это просто для теста, ибо моков мало
   const similarfilmArray: FilmStructure[] = filmListFromState.filter(
@@ -32,22 +35,25 @@ function Film(props: FilmProps): JSX.Element {
         <div className="film-card__hero">
           <Header filmCard={filmExample} />
 
-          <div className="film-card__wrap">
-            <div className="film-card__desc">
-              <h2 className="film-card__title">{filmExample.name}</h2>
-              <p className="film-card__meta">
-                <span className="film-card__genre">{filmExample.genre}</span>
-                <span className="film-card__year">{filmExample.released}</span>
-              </p>
-
-              <div className="film-card__buttons">
-                <Buttons filmExample={filmExample} />
-                <a href="add-review.html" className="btn film-card__button">
-                  Add review
-                </a>
+          {authorizationStatus === AuthorizationStatus.Auth && (
+            <div className="film-card__wrap">
+              <div className="film-card__desc">
+                <h2 className="film-card__title">{filmExample.name}</h2>
+                <p className="film-card__meta">
+                  <span className="film-card__genre">{filmExample.genre}</span>
+                  <span className="film-card__year">
+                    {filmExample.released}
+                  </span>
+                </p>
+                <div className="film-card__buttons">
+                  <Buttons filmExample={filmExample} />
+                  <a href="add-review.html" className="btn film-card__button">
+                    Add review
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div className="film-card__wrap film-card__translate-top">
