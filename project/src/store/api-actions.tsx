@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state.js';
@@ -27,7 +28,7 @@ export const fetchFilmAction = createAsyncThunk<
   dispatch(downloadFilms(data));
   dispatch(setDataLoadedStatus(false));
 });
-
+// Дополучить логику!
 export const checkAuthAction = createAsyncThunk<
   void,
   undefined,
@@ -39,6 +40,7 @@ export const checkAuthAction = createAsyncThunk<
 >('user/checkAuth', async (_arg, { dispatch, extra: api }) => {
   try {
     await api.get(APIRoute.Login);
+    console.log(APIRoute.Login);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
   } catch {
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));

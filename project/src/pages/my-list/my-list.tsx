@@ -2,12 +2,13 @@ import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 import Footer from '../../components/footer/footer';
 import FilmCard from '../../components/film-card/film-card';
-
 import { FilmStructure } from '../../types/films';
+
 
 type FilmCardProps = {
   filmsStructure: FilmStructure[];
 };
+
 
 function MyList(props: FilmCardProps): JSX.Element {
   const { filmsStructure } = props;

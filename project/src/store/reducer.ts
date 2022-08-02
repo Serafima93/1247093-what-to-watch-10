@@ -24,7 +24,7 @@ type InitalState = {
   LoadMoreFilms: boolean,
   tabFromState: string,
   authorizationStatus: AuthorizationStatus,
-  isDataLoaded: boolean,
+  isDataLoading: boolean,
   filmListFromState: Films,
   allFilmsList: Films,
 }
@@ -38,7 +38,7 @@ const initialState: InitalState = {
   LoadMoreFilms: ButtonCondition.Unblocked,
   tabFromState: 'Overview',
   authorizationStatus: AuthorizationStatus.Unknown,
-  isDataLoaded: false,
+  isDataLoading: true,
   filmListFromState: [],
   allFilmsList: [],
 };
@@ -72,7 +72,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.authorizationStatus = action.payload;
     })
     .addCase(setDataLoadedStatus, (state, action) => {
-      state.isDataLoaded = action.payload;
+      state.isDataLoading = action.payload;
     })
     .addCase(resetFilms, (state) => {
       state.filmListFromState = state.allFilmsList;

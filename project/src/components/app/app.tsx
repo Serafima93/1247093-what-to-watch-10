@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import { useAppSelector } from '../../hooks';
-
 import MainScreen from '../../pages/main/main';
 import Film from '../../pages/film/film';
 import MyList from '../../pages/my-list/my-list';
@@ -20,9 +19,11 @@ const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
 
 function App(): JSX.Element {
-  const { authorizationStatus, isDataLoaded, allFilmsList } = useAppSelector((state) => state);
+  const { authorizationStatus, isDataLoading, allFilmsList } = useAppSelector(
+    (state) => state
+  );
 
-  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+  if (isCheckedAuth(authorizationStatus) || isDataLoading) {
     return <LoadingScreen />;
   }
 
@@ -38,7 +39,10 @@ function App(): JSX.Element {
           path={AppRoute.AddReview}
           element={<AddReview filmsList={allFilmsList} />}
         />
-        <Route path={AppRoute.Login} element={<SingIn authorizationStatus={authorizationStatus}/>} />
+        <Route
+          path={AppRoute.Login}
+          element={<SingIn authorizationStatus={authorizationStatus} />}
+        />
         <Route
           path={AppRoute.Player}
           element={<Player filmsList={allFilmsList} />}
