@@ -1,29 +1,39 @@
 import Logo from '../logo/logo';
-import { Link } from 'react-router-dom';
+import UserBlock from '../user-block/user-block';
+import LoginAvatar from '../user-block/login-avatar';
+import { useAppSelector } from '../../hooks';
+import { AuthorizationStatus } from '../../const';
+import { FilmStructure } from '../../types/films';
 
-function Header(): JSX.Element {
+type HeaderProps = {
+  filmCard: FilmStructure;
+};
+
+function Header(props: HeaderProps): JSX.Element {
+  const {filmCard} = props;
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
+
+  const checkStatus = authorizationStatus !== AuthorizationStatus.Auth;
+
   return (
-    <header className="page-header film-card__head">
-      <Logo />
+    <>
+      <div className="film-card__bg">
+        <img
+          src={checkStatus ? 'img/bg-header.jpg' : filmCard.backgroundImage}
+          alt={filmCard.name}
+        />
+      </div>
 
-      <ul className="user-block">
-        <li className="user-block__item">
-          <div className="user-block__avatar">
-            <img
-              src="img/avatar.jpg"
-              alt="User avatar"
-              width="63"
-              height="63"
-            />
-          </div>
-        </li>
-        <li className="user-block__item">
-          <Link className="user-block__link" to="#">
-            Sign out
-          </Link>
-        </li>
-      </ul>
-    </header>
+      <h1 className="visually-hidden">WTW</h1>
+      <header
+        className={checkStatus ? 'page-header' : 'page-header film-card__head'}
+      >
+        <Logo />
+        {checkStatus ? <LoginAvatar /> : <UserBlock />}
+      </header>
+    </>
   );
 }
 

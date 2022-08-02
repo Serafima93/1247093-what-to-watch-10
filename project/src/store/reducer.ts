@@ -6,25 +6,41 @@ import {
   changeFilmsCount,
   resetFilmsCount,
   changeTab,
+  downloadFilms,
+  requireAuthorization,
+  setDataLoadedStatus,
 } from './actions';
-import { films } from '../mocks/mocks';
 import { reviews } from '../mocks/reviews';
+import { FilmsCountForView, ButtonCondition, AuthorizationStatus } from '../const';
+import { Films } from '../types/films';
 
-import { FilmsCountForView, ButtonCondition } from '../const';
 
-const filmCard = films[0];
+type InitalState = {
+  genreFromState: string,
+  allReviewsList: typeof reviews,
+  MaxFilms: FilmsCountForView,
+  MinFilms: FilmsCountForView,
+  StepFilms: FilmsCountForView.Step,
+  LoadMoreFilms: boolean,
+  tabFromState: string,
+  authorizationStatus: AuthorizationStatus,
+  isDataLoading: boolean,
+  filmListFromState: Films,
+  allFilmsList: Films,
+}
 
-const initialState = {
+const initialState: InitalState = {
   genreFromState: 'All genres',
-  filmListFromState: films,
-  allFilmsList: films,
   allReviewsList: reviews,
-  fiimCard: filmCard,
   MaxFilms: FilmsCountForView.Max,
   MinFilms: FilmsCountForView.Min,
   StepFilms: FilmsCountForView.Step,
   LoadMoreFilms: ButtonCondition.Unblocked,
   tabFromState: 'Overview',
+  authorizationStatus: AuthorizationStatus.Unknown,
+  isDataLoading: true,
+  filmListFromState: [],
+  allFilmsList: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -48,11 +64,19 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(resetFilmsCount, (state) => {
       state.MaxFilms = FilmsCountForView.Max;
     })
+    .addCase(downloadFilms, (state, action) => {
+      state.allFilmsList = action.payload;
+      state.filmListFromState = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setDataLoadedStatus, (state, action) => {
+      state.isDataLoading = action.payload;
+    })
     .addCase(resetFilms, (state) => {
-      state.filmListFromState = films;
-      state.allFilmsList = films;
+      state.filmListFromState = state.allFilmsList;
       state.genreFromState = 'All genres';
-      state.fiimCard = filmCard;
       state.LoadMoreFilms = ButtonCondition.Unblocked;
       state.MaxFilms = FilmsCountForView.Max;
       state.MinFilms = FilmsCountForView.Min;

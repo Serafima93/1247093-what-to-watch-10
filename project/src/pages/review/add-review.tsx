@@ -1,10 +1,13 @@
 /* eslint-disable no-console */
 import Logo from '../../components/logo/logo';
+import UserBlock from '../../components/user-block/user-block';
+import LoginAvatar from '../../components/user-block/login-avatar';
 import { FilmStructure } from '../../types/films';
 import { useState, ChangeEvent } from 'react';
 import { useParams } from 'react-router-dom';
-import { ratingStars } from '../../const';
+import { ratingStars, AuthorizationStatus } from '../../const';
 import React from 'react';
+import { useAppSelector } from '../../hooks';
 
 type AddReviewScreenProps = {
   filmsList: FilmStructure[];
@@ -18,6 +21,9 @@ function AddReview({ filmsList }: AddReviewScreenProps): JSX.Element {
   const filmExample = filmsList.find(
     (item) => item.id === Number(params.id)
   ) as FilmStructure;
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
 
   return (
     <section className="film-card film-card--full">
@@ -42,22 +48,7 @@ function AddReview({ filmsList }: AddReviewScreenProps): JSX.Element {
               </li>
             </ul>
           </nav>
-
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img
-                  src="img/avatar.jpg"
-                  alt="User avatar"
-                  width="63"
-                  height="63"
-                />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
+          {authorizationStatus === AuthorizationStatus.Auth ? <UserBlock /> : <LoginAvatar />}
         </header>
 
         <div className="film-card__poster film-card__poster--small">
@@ -84,7 +75,6 @@ function AddReview({ filmsList }: AddReviewScreenProps): JSX.Element {
                     value={id}
                     checked={id === userRating}
                     onChange={(evt) => setRating(Number(evt.target.value))}
-                    // не очень понимаю свойство checked почему в radio-button почему оно работает и выделяет всех кто до. Хотелось бы почитать)
                   />
                   <label className="rating__label" htmlFor={`star-${id}`}>
                     {`Rating-${id}`}

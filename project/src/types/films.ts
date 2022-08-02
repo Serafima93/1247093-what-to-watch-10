@@ -19,6 +19,7 @@ export type FilmStructure = {
   mark: string;
 };
 
+
 export type FilmReview = {
   id: number;
   user: {
@@ -29,3 +30,6 @@ export type FilmReview = {
   comment: string;
   date: string;
 };
+
+export type Films = FilmStructure[];
+
