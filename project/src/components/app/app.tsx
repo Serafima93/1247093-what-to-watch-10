@@ -13,15 +13,20 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
-
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import {
+  getLoadedDataStatus,
+  getallFilmsList,
+} from '../../store/films-data/selectors';
 
 const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
 
 function App(): JSX.Element {
-  const { authorizationStatus, isDataLoading, allFilmsList } = useAppSelector(
-    (state) => state
-  );
+
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isDataLoading = useAppSelector(getLoadedDataStatus);
+  const allFilmsList = useAppSelector(getallFilmsList);
 
   if (isCheckedAuth(authorizationStatus) || isDataLoading) {
     return <LoadingScreen />;

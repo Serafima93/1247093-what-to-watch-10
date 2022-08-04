@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeTab } from '../../store/actions';
+import { gettabFromState } from '../../store/films-process/selectors';
 
 type TabMeaning = {
   tabMeaning: string;
@@ -9,7 +10,7 @@ type TabMeaning = {
 function Tab(props: TabMeaning): JSX.Element {
   const { tabMeaning } = props;
   const dispatch = useAppDispatch();
-  const tabFromState = useAppSelector((state) => state.tabFromState);
+  const tabFromState = useAppSelector(gettabFromState);
 
   return (
     <>

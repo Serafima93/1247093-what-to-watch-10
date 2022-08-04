@@ -22,7 +22,6 @@ function GenreList(props: GenreListProps): JSX.Element {
         ))}
       </ul>
       {}
-      {/* это реакт хак, когда Fragment не работает */}
     </>
   );
 }

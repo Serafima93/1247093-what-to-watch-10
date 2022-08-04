@@ -8,10 +8,13 @@ import { FilmStructure } from '../../types/films';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { FilmsCountForView, AuthorizationStatus } from '../../const';
+import { getfilmListFromState } from '../../store/films-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 type FilmProps = {
   filmsList: FilmStructure[];
 };
+
 function Film(props: FilmProps): JSX.Element {
   const { filmsList } = props;
   const params = useParams();
@@ -19,10 +22,9 @@ function Film(props: FilmProps): JSX.Element {
     (item) => item.id === Number(params.id)
   ) as FilmStructure;
 
-  const filmListFromState = useAppSelector((state) => state.filmListFromState);
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const filmListFromState = useAppSelector(getfilmListFromState);
+
   //потом доделаю чтобы не появлялся в похожих карточках сама карточка,
   // пока это просто для теста, ибо моков мало
   const similarfilmArray: FilmStructure[] = filmListFromState.filter(

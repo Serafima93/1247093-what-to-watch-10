@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import { ratingStars, AuthorizationStatus } from '../../const';
 import React from 'react';
 import { useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 type AddReviewScreenProps = {
   filmsList: FilmStructure[];
@@ -21,9 +22,8 @@ function AddReview({ filmsList }: AddReviewScreenProps): JSX.Element {
   const filmExample = filmsList.find(
     (item) => item.id === Number(params.id)
   ) as FilmStructure;
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
     <section className="film-card film-card--full">

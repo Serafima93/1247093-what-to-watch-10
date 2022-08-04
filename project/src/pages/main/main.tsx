@@ -8,20 +8,27 @@ import Buttons from '../../components/buttons/buttons';
 import { useAppSelector } from '../../hooks';
 import { useState } from 'react';
 import { AuthorizationStatus } from '../../const';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import {
+  getfilmListFromState,
+  getallFilmsList,
+} from '../../store/films-data/selectors';
+import {
+  getMaxFilms,
+  getMinFilms,
+  getLoadMoreFilms,
+} from '../../store/films-process/selectors';
 
 function MainScreen(): JSX.Element {
-  const filmsFromState = useAppSelector((state) => state.filmListFromState);
-  const genreListFromState = useAppSelector((state) => state.allFilmsList);
-  const buttonConditionFromState = useAppSelector(
-    (state) => state.LoadMoreFilms
-  );
-  const incFilmsLength = useAppSelector((state) => state.MaxFilms);
-  const minFilmsLength = useAppSelector((state) => state.MinFilms);
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
-  const filmCard = filmsFromState[0];
 
+  const filmsFromState = useAppSelector(getfilmListFromState);
+  const genreListFromState = useAppSelector(getallFilmsList);
+  const buttonConditionFromState = useAppSelector(getLoadMoreFilms);
+  const incFilmsLength = useAppSelector(getMaxFilms);
+  const minFilmsLength = useAppSelector(getMinFilms);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  const filmCard = filmsFromState[0];
   const [isVisibleFilmButton, setVisibleFilmButton] = useState(
     buttonConditionFromState
   );
