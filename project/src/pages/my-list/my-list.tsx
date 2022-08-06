@@ -3,15 +3,11 @@ import UserBlock from '../../components/user-block/user-block';
 import Footer from '../../components/footer/footer';
 import FilmCard from '../../components/film-card/film-card';
 import { FilmStructure } from '../../types/films';
+import { useAppSelector } from '../../hooks';
+import { getallFilmsList } from '../../store/films-data/selectors';
 
-
-type FilmCardProps = {
-  filmsStructure: FilmStructure[];
-};
-
-
-function MyList(props: FilmCardProps): JSX.Element {
-  const { filmsStructure } = props;
+function MyList(): JSX.Element {
+  const films = useAppSelector(getallFilmsList);
 
   return (
     <div className="user-page">
@@ -20,7 +16,7 @@ function MyList(props: FilmCardProps): JSX.Element {
 
         <h1 className="page-title user-page__title">
           My list{' '}
-          <span className="user-page__film-count">{filmsStructure.length}</span>
+          <span className="user-page__film-count">{films.length}</span>
         </h1>
         <UserBlock />
       </header>
@@ -29,8 +25,8 @@ function MyList(props: FilmCardProps): JSX.Element {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          {filmsStructure.map((film: FilmStructure) => (
-            <FilmCard filmCard={film} key={film.id + 1} />
+          {films.map((film: FilmStructure) => (
+            <FilmCard filmCard={film} key={film.id} />
           ))}
         </div>
       </section>

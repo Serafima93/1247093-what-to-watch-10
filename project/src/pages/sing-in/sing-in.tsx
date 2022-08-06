@@ -7,13 +7,12 @@ import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 import { AuthorizationStatus, AppRoute } from '../../const';
 import { Navigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
-type authorizationStatusProps = {
-  authorizationStatus: AuthorizationStatus;
-};
+function SingIn(): JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-function SingIn(props: authorizationStatusProps): JSX.Element {
-  const { authorizationStatus } = props;
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 

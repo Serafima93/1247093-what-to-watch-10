@@ -44,3 +44,8 @@ export enum NameSpace {
   Film = 'FILM',
   User = 'USER',
 }
+
+export const HeaderCondition = {
+  Main: true,
+  Film: false,
+};

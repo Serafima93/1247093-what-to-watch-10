@@ -14,19 +14,14 @@ import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import {
-  getLoadedDataStatus,
-  getallFilmsList,
-} from '../../store/films-data/selectors';
+import { getLoadedDataStatus } from '../../store/films-data/selectors';
 
 const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
 
 function App(): JSX.Element {
-
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoading = useAppSelector(getLoadedDataStatus);
-  const allFilmsList = useAppSelector(getallFilmsList);
 
   if (isCheckedAuth(authorizationStatus) || isDataLoading) {
     return <LoadingScreen />;
@@ -36,27 +31,15 @@ function App(): JSX.Element {
     <HistoryRouter history={browserHistory}>
       <Routes>
         <Route path={AppRoute.Main} element={<MainScreen />} />
-        <Route
-          path={AppRoute.Film}
-          element={<Film filmsList={allFilmsList} />}
-        />
-        <Route
-          path={AppRoute.AddReview}
-          element={<AddReview filmsList={allFilmsList} />}
-        />
-        <Route
-          path={AppRoute.Login}
-          element={<SingIn authorizationStatus={authorizationStatus} />}
-        />
-        <Route
-          path={AppRoute.Player}
-          element={<Player filmsList={allFilmsList} />}
-        />
+        <Route path={AppRoute.Film} element={<Film />} />
+        <Route path={AppRoute.AddReview} element={<AddReview />} />
+        <Route path={AppRoute.Login} element={<SingIn />} />
+        <Route path={AppRoute.Player} element={<Player />} />
         <Route
           path={AppRoute.MyList}
           element={
             <PrivateRoute authorizationStatus={authorizationStatus}>
-              <MyList filmsStructure={allFilmsList} />
+              <MyList />
             </PrivateRoute>
           }
         />

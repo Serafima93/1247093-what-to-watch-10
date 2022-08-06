@@ -2,12 +2,13 @@
 import { FilmStructure } from '../../types/films';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
+import { useAppSelector } from '../../hooks';
 
-type PlayerProps = {
-  filmsList: FilmStructure[];
-};
+import { getallFilmsList } from '../../store/films-data/selectors';
 
-function Player(props: PlayerProps): JSX.Element {
+function Player(): JSX.Element {
+  const filmsList = useAppSelector(getallFilmsList);
+
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -16,7 +17,6 @@ function Player(props: PlayerProps): JSX.Element {
   const navigate = useNavigate();
   const params = useParams();
 
-  const { filmsList } = props;
   const filmExample = filmsList.find(
     (item) => item.id === Number(params.id)
   ) as FilmStructure;
