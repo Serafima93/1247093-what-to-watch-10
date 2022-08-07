@@ -11,7 +11,7 @@ type HeaderProps = {
 };
 
 function Header(props: HeaderProps): JSX.Element {
-  const {filmCard} = props;
+  const { filmCard } = props;
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const checkStatus = authorizationStatus !== AuthorizationStatus.Auth;

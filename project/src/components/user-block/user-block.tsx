@@ -15,6 +15,8 @@ function UserBlock(): JSX.Element {
       <li className="user-block__item">
         <Link
           className="user-block__link"
+          // Лучше объявить отдельную функцию внутри UserBlock, и здесь ее по имени указать, а не объявлять на месте
+          // не очень поняла, что имеется ввиду
           onClick={(evt) => {
             evt.preventDefault();
             dispatch(logoutAction());

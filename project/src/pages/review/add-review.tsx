@@ -3,6 +3,8 @@ import Logo from '../../components/logo/logo';
 import AddReviewForm from '../../components/add-review-item/add-review-item';
 import UserBlock from '../../components/user-block/user-block';
 import LoginAvatar from '../../components/user-block/login-avatar';
+import FilmCardPoster from '../../components/film-card/film-card-poster';
+import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import { FilmStructure } from '../../types/films';
 import { useParams } from 'react-router-dom';
 import { AuthorizationStatus } from '../../const';
@@ -30,18 +32,8 @@ function AddReview(): JSX.Element {
 
         <header className="page-header">
           <Logo />
-          <nav className="breadcrumbs">
-            <ul className="breadcrumbs__list">
-              <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">
-                  {filmExample.name}
-                </a>
-              </li>
-              <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link">Add review</a>
-              </li>
-            </ul>
-          </nav>
+          <Breadcrumbs filmExample={filmExample} />
+
           {authorizationStatus === AuthorizationStatus.Auth ? (
             <UserBlock />
           ) : (
@@ -50,12 +42,7 @@ function AddReview(): JSX.Element {
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img
-            src={filmExample.posterImage}
-            alt={` ${filmExample.name} poster`}
-            width="218"
-            height="327"
-          />
+          <FilmCardPoster filmCard={filmExample} />
         </div>
       </div>
       <AddReviewForm filmExample={filmExample} />
