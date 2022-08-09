@@ -4,17 +4,16 @@ import LoginAvatar from '../user-block/login-avatar';
 import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../const';
 import { FilmStructure } from '../../types/films';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 type HeaderProps = {
   filmCard: FilmStructure;
 };
 
 function Header(props: HeaderProps): JSX.Element {
-  const {filmCard} = props;
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+  const { filmCard } = props;
 
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const checkStatus = authorizationStatus !== AuthorizationStatus.Auth;
 
   return (

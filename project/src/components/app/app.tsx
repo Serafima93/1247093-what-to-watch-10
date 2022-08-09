@@ -1,27 +1,24 @@
 /* eslint-disable no-console */
 import { Route, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute, isCheckedAuth } from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import { useAppSelector } from '../../hooks';
 import MainScreen from '../../pages/main/main';
 import Film from '../../pages/film/film';
 import MyList from '../../pages/my-list/my-list';
-import SingIn from '../../pages/sing-in/sing-in';
+import SignIn from '../../pages/sign-in/sign-in';
 import AddReview from '../../pages/review/add-review';
 import Player from '../../pages/player/player';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
-
-
-const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
-  authorizationStatus === AuthorizationStatus.Unknown;
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getLoadedDataStatus } from '../../store/films-data/selectors';
 
 function App(): JSX.Element {
-  const { authorizationStatus, isDataLoading, allFilmsList } = useAppSelector(
-    (state) => state
-  );
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isDataLoading = useAppSelector(getLoadedDataStatus);
 
   if (isCheckedAuth(authorizationStatus) || isDataLoading) {
     return <LoadingScreen />;
@@ -31,27 +28,15 @@ function App(): JSX.Element {
     <HistoryRouter history={browserHistory}>
       <Routes>
         <Route path={AppRoute.Main} element={<MainScreen />} />
-        <Route
-          path={AppRoute.Film}
-          element={<Film filmsList={allFilmsList} />}
-        />
-        <Route
-          path={AppRoute.AddReview}
-          element={<AddReview filmsList={allFilmsList} />}
-        />
-        <Route
-          path={AppRoute.Login}
-          element={<SingIn authorizationStatus={authorizationStatus} />}
-        />
-        <Route
-          path={AppRoute.Player}
-          element={<Player filmsList={allFilmsList} />}
-        />
+        <Route path={AppRoute.Film} element={<Film />} />
+        <Route path={AppRoute.AddReview} element={<AddReview />} />
+        <Route path={AppRoute.Login} element={<SignIn />} />
+        <Route path={AppRoute.Player} element={<Player />} />
         <Route
           path={AppRoute.MyList}
           element={
             <PrivateRoute authorizationStatus={authorizationStatus}>
-              <MyList filmsStructure={allFilmsList} />
+              <MyList />
             </PrivateRoute>
           }
         />

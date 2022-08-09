@@ -2,32 +2,23 @@
 import Header from '../../components/header/header';
 import Tabs from '../../components/tabs/tabs';
 import Footer from '../../components/footer/footer';
-import FilmCard from '../../components/film-card/film-card';
-import Buttons from '../../components/buttons/buttons';
+import MoreLikeThisFilms from '../../components/more-like-this-films/more-like-this-films';
+import FilmCardPoster from '../../components/film-card/film-card-poster';
+import FilmCardDescp from '../../components/film-card/film-card-desc';
+
 import { FilmStructure } from '../../types/films';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
-import { FilmsCountForView, AuthorizationStatus } from '../../const';
+import { AuthorizationStatus, HeaderCondition } from '../../const';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getallFilmsList } from '../../store/films-data/selectors';
 
-type FilmProps = {
-  filmsList: FilmStructure[];
-};
-function Film(props: FilmProps): JSX.Element {
-  const { filmsList } = props;
+function Film(): JSX.Element {
+  const filmsList = useAppSelector(getallFilmsList);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
   const params = useParams();
-  const filmExample = filmsList.find(
-    (item) => item.id === Number(params.id)
-  ) as FilmStructure;
-
-  const filmListFromState = useAppSelector((state) => state.filmListFromState);
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
-  //потом доделаю чтобы не появлялся в похожих карточках сама карточка,
-  // пока это просто для теста, ибо моков мало
-  const similarfilmArray: FilmStructure[] = filmListFromState.filter(
-    (item) => item.genre === filmExample.genre
-  );
+  const filmExample = filmsList.find((item) => item.id === Number(params.id)) as FilmStructure;
 
   return (
     <>
@@ -37,21 +28,10 @@ function Film(props: FilmProps): JSX.Element {
 
           {authorizationStatus === AuthorizationStatus.Auth && (
             <div className="film-card__wrap">
-              <div className="film-card__desc">
-                <h2 className="film-card__title">{filmExample.name}</h2>
-                <p className="film-card__meta">
-                  <span className="film-card__genre">{filmExample.genre}</span>
-                  <span className="film-card__year">
-                    {filmExample.released}
-                  </span>
-                </p>
-                <div className="film-card__buttons">
-                  <Buttons filmExample={filmExample} />
-                  <a href="add-review.html" className="btn film-card__button">
-                    Add review
-                  </a>
-                </div>
-              </div>
+              <FilmCardDescp
+                statusPlace={HeaderCondition.Film}
+                filmCard={filmExample}
+              />
             </div>
           )}
         </div>
@@ -59,30 +39,14 @@ function Film(props: FilmProps): JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img
-                src={filmExample.posterImage}
-                alt={` ${filmExample.name} poster`}
-                width="218"
-                height="327"
-              />
+              <FilmCardPoster filmCard={filmExample} />
             </div>
             <Tabs filmExample={filmExample} />
           </div>
         </div>
       </section>
       <div className="page-content">
-        <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
-
-          <div className="catalog__films-list">
-            {similarfilmArray
-              .slice(FilmsCountForView.Min, FilmsCountForView.Similar)
-              .map((item) => (
-                <FilmCard filmCard={item} key={item.id + 1} />
-              ))}
-          </div>
-        </section>
-
+        <MoreLikeThisFilms />
         <Footer />
       </div>
     </>

@@ -23,7 +23,11 @@ function Buttons(props: ButtonsProps): JSX.Element {
         </svg>
         <span>Play</span>
       </button>
-      <button className="btn btn--list film-card__button" type="button">
+      <button
+        className="btn btn--list film-card__button"
+        type="button"
+        onClick={() => navigate('/myList')}
+      >
         <svg viewBox="0 0 19 20" width="19" height="20">
           <use xlinkHref="#add"></use>
         </svg>

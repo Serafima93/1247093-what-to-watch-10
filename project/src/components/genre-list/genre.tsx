@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { resetFilms, changeGenre } from '../../store/actions';
+import { resetFilms, resetFilmsData, changeGenre } from '../../store/actions';
+import { getgenreFromState } from '../../store/films-data/selectors';
 
 type GenreProp = {
   filmGenre: string;
@@ -8,16 +9,23 @@ type GenreProp = {
 
 function Genre(props: GenreProp): JSX.Element {
   const { filmGenre } = props;
-  const genre = useAppSelector((state) => state.genreFromState);
+  const genre = useAppSelector(getgenreFromState);
 
   const dispatch = useAppDispatch();
 
   return (
-    <li className={filmGenre === genre ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item'}>
+    <li
+      className={
+        filmGenre === genre
+          ? 'catalog__genres-item catalog__genres-item--active'
+          : 'catalog__genres-item'
+      }
+    >
       <a
         href="#s"
         className="catalog__genres-link"
         onClick={() => {
+          dispatch(resetFilmsData());
           dispatch(resetFilms());
           dispatch(changeGenre(filmGenre));
         }}

@@ -1,29 +1,25 @@
 /* eslint-disable no-console */
 import Logo from '../../components/logo/logo';
+import AddReviewForm from '../../components/add-review-item/add-review-item';
 import UserBlock from '../../components/user-block/user-block';
 import LoginAvatar from '../../components/user-block/login-avatar';
+import FilmCardPoster from '../../components/film-card/film-card-poster';
+import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import { FilmStructure } from '../../types/films';
-import { useState, ChangeEvent } from 'react';
 import { useParams } from 'react-router-dom';
-import { ratingStars, AuthorizationStatus } from '../../const';
-import React from 'react';
+import { AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getallFilmsList } from '../../store/films-data/selectors';
 
-type AddReviewScreenProps = {
-  filmsList: FilmStructure[];
-};
-
-function AddReview({ filmsList }: AddReviewScreenProps): JSX.Element {
-  const [userReview, setUserReview] = useState('Review text');
-  const [userRating, setRating] = useState(0);
+function AddReview(): JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const allFilmListFromState = useAppSelector(getallFilmsList);
 
   const params = useParams();
-  const filmExample = filmsList.find(
+  const filmExample = allFilmListFromState.find(
     (item) => item.id === Number(params.id)
   ) as FilmStructure;
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
 
   return (
     <section className="film-card film-card--full">
@@ -36,74 +32,20 @@ function AddReview({ filmsList }: AddReviewScreenProps): JSX.Element {
 
         <header className="page-header">
           <Logo />
-          <nav className="breadcrumbs">
-            <ul className="breadcrumbs__list">
-              <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">
-                  {filmExample.name}
-                </a>
-              </li>
-              <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link">Add review</a>
-              </li>
-            </ul>
-          </nav>
-          {authorizationStatus === AuthorizationStatus.Auth ? <UserBlock /> : <LoginAvatar />}
+          <Breadcrumbs filmExample={filmExample} />
+
+          {authorizationStatus === AuthorizationStatus.Auth ? (
+            <UserBlock />
+          ) : (
+            <LoginAvatar />
+          )}
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img
-            src={filmExample.posterImage}
-            alt={` ${filmExample.name} poster`}
-            width="218"
-            height="327"
-          />
+          <FilmCardPoster filmCard={filmExample} />
         </div>
       </div>
-
-      <div className="add-review">
-        <form action="#" className="add-review__form">
-          <div className="rating">
-            <div className="rating__stars">
-              {ratingStars.map((id) => (
-                <React.Fragment key={id + filmExample.name}>
-                  <input
-                    className="rating__input"
-                    id={`star-${id}`}
-                    type="radio"
-                    name="rating"
-                    value={id}
-                    checked={id === userRating}
-                    onChange={(evt) => setRating(Number(evt.target.value))}
-                  />
-                  <label className="rating__label" htmlFor={`star-${id}`}>
-                    {`Rating-${id}`}
-                  </label>
-                </React.Fragment>
-              ))}
-            </div>
-          </div>
-
-          <div className="add-review__text">
-            <textarea
-              className="add-review__textarea"
-              name="review-text"
-              id="review-text"
-              placeholder={userReview}
-              onChange={({ target }: ChangeEvent<HTMLTextAreaElement>) => {
-                const value = target.value;
-                setUserReview(value);
-              }}
-            >
-            </textarea>
-            <div className="add-review__submit">
-              <button className="add-review__btn" type="submit">
-                Post
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
+      <AddReviewForm filmExample={filmExample} />
     </section>
   );
 }

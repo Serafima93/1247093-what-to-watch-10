@@ -38,3 +38,17 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
 }
+
+export enum NameSpace {
+  Data = 'DATA',
+  Film = 'FILM',
+  User = 'USER',
+}
+
+export const HeaderCondition = {
+  Main: true,
+  Film: false,
+};
+export const isCheckedAuth = (
+  authorizationStatus: AuthorizationStatus
+): boolean => authorizationStatus === AuthorizationStatus.Unknown;
