@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
-import { FilmReview } from '../../types/films';
-
+import { FilmComment } from '../../types/films';
 
 type UserReviewsProps = {
-  reviewExample: FilmReview;
+  reviewExample: FilmComment;
 };
 
 function ReviewList(props: UserReviewsProps): JSX.Element {

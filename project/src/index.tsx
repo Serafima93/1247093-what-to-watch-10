@@ -5,9 +5,9 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { checkAuthAction, fetchFilmAction } from './store/api-actions';
+import { checkAuthAction, fetchFilmsAction } from './store/api-actions';
 
-store.dispatch(fetchFilmAction());
+store.dispatch(fetchFilmsAction());
 
 store.dispatch(checkAuthAction());
 

@@ -5,20 +5,20 @@ import Footer from '../../components/footer/footer';
 import MoreLikeThisFilms from '../../components/more-like-this-films/more-like-this-films';
 import FilmCardPoster from '../../components/film-card/film-card-poster';
 import FilmCardDescp from '../../components/film-card/film-card-desc';
-
-import { FilmStructure } from '../../types/films';
-import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
+import { FilmStructure } from '../../types/films';
 import { AuthorizationStatus, HeaderCondition } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { getallFilmsList } from '../../store/films-data/selectors';
+// import { getFilm } from '../../store/films-data/selectors';
 
-function Film(): JSX.Element {
-  const filmsList = useAppSelector(getallFilmsList);
+type FilmProps = {
+  filmExample: FilmStructure;
+};
+
+function Film(props: FilmProps): JSX.Element {
+  const { filmExample } = props;
+  // const filmExample = useAppSelector(getFilm);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-
-  const params = useParams();
-  const filmExample = filmsList.find((item) => item.id === Number(params.id)) as FilmStructure;
 
   return (
     <>

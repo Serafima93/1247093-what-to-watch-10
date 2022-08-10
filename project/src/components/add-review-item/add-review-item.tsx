@@ -1,7 +1,11 @@
+/* eslint-disable no-console */
 import React from 'react';
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { ratingStars } from '../../const';
 import { FilmStructure } from '../../types/films';
+import { useAppDispatch } from '../../hooks';
+import { addCommentAction } from '../../store/api-actions';
+import { CommentData } from '../../types/comment-data';
 
 type AddReviewItemProps = {
   filmExample: FilmStructure;
@@ -11,10 +15,30 @@ function AddReviewForm(props: AddReviewItemProps): JSX.Element {
   const { filmExample } = props;
   const [userReview, setUserReview] = useState('Review text');
   const [userRating, setRating] = useState(0);
+  const dispatch = useAppDispatch();
+
+  const onSubmit = (formData: CommentData) => {
+    dispatch(addCommentAction(formData));
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    if (userReview !== null && userRating !== null) {
+      onSubmit({
+        comment: userReview,
+        rating: userRating,
+        id: filmExample.id,
+      });
+    }
+  };
+
+  console.log(userReview);
+  console.log(userRating);
+
 
   return (
     <div className="add-review">
-      <form action="#" className="add-review__form">
+      <form action="#" className="add-review__form" onSubmit={handleSubmit}>
         <div className="rating">
           <div className="rating__stars">
             {ratingStars.map((id) => (
