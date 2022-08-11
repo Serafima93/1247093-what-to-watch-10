@@ -8,8 +8,15 @@ import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus, HeaderCondition } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { getallFilmsList } from '../../store/films-data/selectors';
+// import { FilmStructure } from '../../types/films';
+
+// type MainFilmProps = {
+//   filmCard: FilmStructure;
+// };
+
 
 function MainScreen(): JSX.Element {
+  // const {filmCard} = props;
   const allFilmListFromState = useAppSelector(getallFilmsList);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 

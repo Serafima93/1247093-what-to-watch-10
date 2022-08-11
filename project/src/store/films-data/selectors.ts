@@ -10,3 +10,5 @@ export const getgenreFromState = (state: State): string => state[NameSpace.Data]
 export const getFilm = (state: State): FilmStructure =>state[NameSpace.Data].film;
 export const getSimilarFilmsList = (state: State): Films =>state[NameSpace.Data].similarListFromState;
 export const getCommentsList = (state: State): FilmComment[] =>state[NameSpace.Data].commentsList;
+
+export const getFavotiteFilms = (state: State): Films =>state[NameSpace.Data].favoriteFilms;

@@ -3,14 +3,22 @@ import { FilmStructure } from '../../types/films';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useAppSelector } from '../../hooks';
-
 import { getallFilmsList } from '../../store/films-data/selectors';
 
 function Player(): JSX.Element {
+
+  function getTimeFromMins(mins: number) {
+    const hours = Math.trunc(mins / 60);
+    const minutes = mins % 60;
+    return `${hours }:${ minutes}`;
+  }
+
   const filmsList = useAppSelector(getallFilmsList);
 
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(true);
+
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -34,13 +42,15 @@ function Player(): JSX.Element {
     videoRef.current.pause();
   }, [isPlaying]);
 
+  const runTime = getTimeFromMins(filmExample.runTime);
+
   return (
     <div className="player">
       <video
         autoPlay
         muted
         src={filmExample.videoLink}
-        className="player__video"
+        className={`${isFullScreen ? 'player__video' : ''}`}
         poster={filmExample.previewImage}
         ref={videoRef}
       >
@@ -61,15 +71,15 @@ function Player(): JSX.Element {
           <div className="player__time">
             <progress
               className="player__progress"
-              value="30"
+              value="0"
               max="100"
             >
             </progress>
-            <div className="player__toggler" style={{ left: '30%' }}>
+            <div className="player__toggler" style={{ left: '0%' }}>
               Toggler
             </div>
           </div>
-          <div className="player__time-value">{filmExample.runTime}</div>
+          <div className="player__time-value">{runTime}</div>
         </div>
 
         <div className="player__controls-row">
@@ -87,7 +97,7 @@ function Player(): JSX.Element {
           <div className="player__name">Transpotting</div>
 
           <button type="button" className="player__full-screen">
-            <svg viewBox="0 0 27 27" width="27" height="27">
+            <svg viewBox="0 0 27 27" width="27" height="27" onClick={() => setIsFullScreen(!isFullScreen)}>
               <use xlinkHref="#full-screen"></use>
             </svg>
             <span>Full screen</span>

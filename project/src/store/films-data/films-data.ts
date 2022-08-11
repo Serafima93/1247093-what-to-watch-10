@@ -6,6 +6,7 @@ import {
   fetchFilmAction,
   fetchSimilarFilmsAction,
   fetchCommentsAction,
+  fetchFavoriteFilmsAction,
 } from '../api-actions';
 import { changeGenre, resetFilmsData } from '../actions';
 import { FilmStructure } from '../../types/films';
@@ -18,6 +19,7 @@ const initialState: FilmsData = {
   isDataLoading: false,
   film: {} as FilmStructure,
   commentsList: [],
+  favoriteFilms: [],
 };
 
 export const filmData = createSlice({
@@ -53,6 +55,13 @@ export const filmData = createSlice({
       })
       .addCase(fetchCommentsAction.fulfilled, (state, action) => {
         state.commentsList = action.payload;
+        state.isDataLoading = false;
+      })
+      .addCase(fetchFavoriteFilmsAction.pending, (state) => {
+        state.isDataLoading = true;
+      })
+      .addCase(fetchFavoriteFilmsAction.fulfilled, (state, action) => {
+        state.favoriteFilms = action.payload;
         state.isDataLoading = false;
       })
       .addCase(changeGenre, (state, action) => {

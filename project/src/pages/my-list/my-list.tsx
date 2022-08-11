@@ -4,10 +4,10 @@ import Footer from '../../components/footer/footer';
 import FilmCard from '../../components/film-card/film-card';
 import { FilmStructure } from '../../types/films';
 import { useAppSelector } from '../../hooks';
-import { getallFilmsList } from '../../store/films-data/selectors';
+import { getFavotiteFilms } from '../../store/films-data/selectors';
 
 function MyList(): JSX.Element {
-  const films = useAppSelector(getallFilmsList);
+  const films = useAppSelector(getFavotiteFilms);
 
   return (
     <div className="user-page">

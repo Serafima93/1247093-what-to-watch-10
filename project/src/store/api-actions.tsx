@@ -9,7 +9,7 @@ import { APIRoute, AppRoute } from '../const';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { CommentData } from '../types/comment-data';
-
+import { FavoriteFilmData } from '../types/favorite-film-data';
 
 export const fetchFilmsAction = createAsyncThunk<
   Films,
@@ -122,6 +122,30 @@ export const addCommentAction = createAsyncThunk<
   async ({ comment, rating, id }, { dispatch, extra: api }) => {
     await api.post<CommentData>(`/comments/${id}`, { comment, rating });
     dispatch(redirectToRoute(AppRoute.Main));
-
   }
 );
+
+export const fetchFavoriteFilmsAction = createAsyncThunk<
+  Films,
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('data/fetchFavoriteFilms', async (_arg, { dispatch, extra: api }) => {
+  const { data } = await api.get<Films>(APIRoute.Favorite);
+  return data;
+});
+
+export const addFavoriteFilmAction = createAsyncThunk<
+  void,
+  FavoriteFilmData,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('data/addFavoriteFilm', async ({ id, status }, { dispatch, extra: api }) => {
+  await api.post<FavoriteFilmData>(`/favorite/${id}/${status}`);
+});

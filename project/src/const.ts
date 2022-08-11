@@ -37,7 +37,7 @@ export enum APIRoute {
   Films = '/films',
   Login = '/login',
   Logout = '/logout',
-  Films2 = '/films/2',
+  Favorite = '/favorite',
 }
 
 export enum NameSpace {
@@ -50,6 +50,12 @@ export const HeaderCondition = {
   Main: true,
   Film: false,
 };
+
 export const isCheckedAuth = (
   authorizationStatus: AuthorizationStatus
 ): boolean => authorizationStatus === AuthorizationStatus.Unknown;
+
+export enum FavoriteFilm {
+  OnServer = 0,
+  NotOnServer = 1,
+}
