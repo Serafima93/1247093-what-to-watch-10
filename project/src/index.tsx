@@ -8,7 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { checkAuthAction, fetchFilmsAction } from './store/api-actions';
 
 store.dispatch(fetchFilmsAction());
-
 store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(

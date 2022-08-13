@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { FilmStructure } from '../../types/films';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -6,7 +5,6 @@ import VideoPlayer from '../video-player/video-player';
 import FilmCardLittle from '../film-card/film-card-little';
 import { useAppDispatch } from '../../hooks';
 import { resetFilms, resetFilmsData } from '../../store/actions';
-import { store } from '../../store';
 import { fetchFilmAction } from '../../store/api-actions';
 
 type FilmCardProps = {
@@ -37,7 +35,7 @@ function FilmCard(props: FilmCardProps): JSX.Element {
         navigate(`/films/${filmCard.id}`);
         dispatch(resetFilmsData());
         dispatch(resetFilms());
-        store.dispatch(fetchFilmAction(filmCard.id.toString()));
+        dispatch(fetchFilmAction(filmCard.id.toString()));
       }}
     >
       <div className="small-film-card__image">

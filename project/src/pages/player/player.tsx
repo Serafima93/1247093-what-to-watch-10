@@ -1,30 +1,22 @@
-/* eslint-disable no-console */
 import { FilmStructure } from '../../types/films';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useAppSelector } from '../../hooks';
 import { getallFilmsList } from '../../store/films-data/selectors';
+import { getTimeFromMins } from '../../utils';
 
 function Player(): JSX.Element {
-
-  function getTimeFromMins(mins: number) {
-    const hours = Math.trunc(mins / 60);
-    const minutes = mins % 60;
-    return `${hours }:${ minutes}`;
-  }
-
   const filmsList = useAppSelector(getallFilmsList);
-
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(true);
-
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const navigate = useNavigate();
   const params = useParams();
 
+  // такой же как и в ревью вопрос
   const filmExample = filmsList.find(
     (item) => item.id === Number(params.id)
   ) as FilmStructure;
@@ -97,7 +89,12 @@ function Player(): JSX.Element {
           <div className="player__name">Transpotting</div>
 
           <button type="button" className="player__full-screen">
-            <svg viewBox="0 0 27 27" width="27" height="27" onClick={() => setIsFullScreen(!isFullScreen)}>
+            <svg
+              viewBox="0 0 27 27"
+              width="27"
+              height="27"
+              onClick={() => setIsFullScreen(!isFullScreen)}
+            >
               <use xlinkHref="#full-screen"></use>
             </svg>
             <span>Full screen</span>

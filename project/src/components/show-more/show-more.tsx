@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeFilmsCount, loadMoreFilms } from '../../store/actions';
 import { ButtonCondition } from '../../const';

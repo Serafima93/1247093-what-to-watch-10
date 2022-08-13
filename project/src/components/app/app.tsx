@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute, isCheckedAuth } from '../../const';
 import PrivateRoute from '../private-route/private-route';
@@ -14,14 +13,15 @@ import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { getLoadedDataStatus } from '../../store/films-data/selectors';
+import { getLoadedDataStatus} from '../../store/films-data/selectors';
 import { getFilm } from '../../store/films-data/selectors';
 
+
 function App(): JSX.Element {
+
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoading = useAppSelector(getLoadedDataStatus);
   const filmExample = useAppSelector(getFilm);
-
 
   if (isCheckedAuth(authorizationStatus) || isDataLoading) {
     return <LoadingScreen />;
@@ -30,11 +30,24 @@ function App(): JSX.Element {
   return (
     <HistoryRouter history={browserHistory}>
       <Routes>
-        <Route path={AppRoute.Main} element={<MainScreen />} />
-        <Route path={AppRoute.Film} element={<Film filmExample={filmExample}/>} />
-        <Route path={AppRoute.AddReview} element={<AddReview />} />
+        <Route
+          path={AppRoute.Main}
+          element={<MainScreen/>}
+        />
+        <Route
+          path={AppRoute.Film}
+          element={<Film filmExample={filmExample} />}
+        />
         <Route path={AppRoute.Login} element={<SignIn />} />
         <Route path={AppRoute.Player} element={<Player />} />
+        <Route
+          path={AppRoute.AddReview}
+          element={
+            <PrivateRoute authorizationStatus={authorizationStatus}>
+              <AddReview />
+            </PrivateRoute>
+          }
+        />
         <Route
           path={AppRoute.MyList}
           element={

@@ -7,6 +7,7 @@ import {
   fetchSimilarFilmsAction,
   fetchCommentsAction,
   fetchFavoriteFilmsAction,
+  fetchPromoFilmAction,
 } from '../api-actions';
 import { changeGenre, resetFilmsData } from '../actions';
 import { FilmStructure } from '../../types/films';
@@ -18,6 +19,7 @@ const initialState: FilmsData = {
   similarListFromState: [],
   isDataLoading: false,
   film: {} as FilmStructure,
+  promoFilm: {} as FilmStructure,
   commentsList: [],
   favoriteFilms: [],
 };
@@ -74,6 +76,13 @@ export const filmData = createSlice({
         state.filmListFromState = state.allFilmsList;
         state.genreFromState = 'All genres';
         // пришлось поделить действие, ибо не знаю как выйти к полному стейту
+      })
+      .addCase(fetchPromoFilmAction.pending, (state) => {
+        state.isDataLoading = true;
+      })
+      .addCase(fetchPromoFilmAction.fulfilled, (state, action) => {
+        state.promoFilm = action.payload;
+        state.isDataLoading = false;
       });
   },
 });

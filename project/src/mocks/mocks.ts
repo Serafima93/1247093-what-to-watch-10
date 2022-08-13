@@ -27,7 +27,6 @@ export const films: FilmStructure[] = [
     genre: 'Comedy',
     released: 1991,
     isFavorite: false,
-    mark: 'Good',
   },
   {
     id: 2,
@@ -55,7 +54,6 @@ export const films: FilmStructure[] = [
     genre: 'Drama',
     released: 2015,
     isFavorite: false,
-    mark: 'Bad',
   },
   {
     id: 3,
@@ -83,7 +81,6 @@ export const films: FilmStructure[] = [
     genre: 'Comedy',
     released: 1974,
     isFavorite: true,
-    mark: 'Very good',
   },
   {
     id: 4,
@@ -111,7 +108,6 @@ export const films: FilmStructure[] = [
     genre: 'Comedy',
     released: 2004,
     isFavorite: true,
-    mark: 'Very good',
   },
   {
     id: 5,
@@ -139,7 +135,6 @@ export const films: FilmStructure[] = [
     genre: 'Comedy',
     released: 2000,
     isFavorite: false,
-    mark: 'Very good',
   },
   {
     id: 6,
@@ -167,7 +162,6 @@ export const films: FilmStructure[] = [
     genre: 'Comedy',
     released: 2019,
     isFavorite: true,
-    mark: 'Very good',
   },
   {
     id: 7,
@@ -195,7 +189,6 @@ export const films: FilmStructure[] = [
     genre: 'K-Drama',
     released: 2019,
     isFavorite: false,
-    mark: 'Very good',
   },
   {
     id: 8,
@@ -223,7 +216,6 @@ export const films: FilmStructure[] = [
     genre: 'Crime',
     released: 2017,
     isFavorite: true,
-    mark: 'Very good',
   },
 
   {
@@ -252,7 +244,6 @@ export const films: FilmStructure[] = [
     genre: 'Crime',
     released: 2017,
     isFavorite: true,
-    mark: 'Very good',
   },
   {
     id: 10,
@@ -280,7 +271,6 @@ export const films: FilmStructure[] = [
     genre: 'Crime',
     released: 2017,
     isFavorite: true,
-    mark: 'Very good',
   },
   {
     id: 11,
@@ -308,7 +298,6 @@ export const films: FilmStructure[] = [
     genre: 'Crime',
     released: 2017,
     isFavorite: true,
-    mark: 'Very good',
   },
 ];
 
@@ -338,5 +327,4 @@ export const filmOne: FilmStructure = {
   genre: 'Drama',
   released: 2015,
   isFavorite: false,
-  mark: 'Bad',
 };

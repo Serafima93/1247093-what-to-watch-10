@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { resetFilms, resetFilmsData, changeGenre } from '../../store/actions';
 import { getgenreFromState } from '../../store/films-data/selectors';

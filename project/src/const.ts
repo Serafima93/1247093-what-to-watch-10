@@ -22,8 +22,8 @@ export const ButtonCondition = {
 
 export enum FilmsCountForView {
   Min = 0,
-  Max = 4,
-  Step = 4,
+  Max = 8,
+  Step = 8,
   Similar = 4,
 }
 
@@ -38,6 +38,7 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   Favorite = '/favorite',
+  PromoFilm = '/promo',
 }
 
 export enum NameSpace {
@@ -59,3 +60,13 @@ export enum FavoriteFilm {
   OnServer = 0,
   NotOnServer = 1,
 }
+
+export enum CommentLength {
+  MinLength = 50,
+  MaxLength = 400,
+}
+
+export const CommentFormButton = {
+  Unblocked: false,
+  Blocked: true,
+};

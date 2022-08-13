@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { FilmStructure, Films } from '../../types/films';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';

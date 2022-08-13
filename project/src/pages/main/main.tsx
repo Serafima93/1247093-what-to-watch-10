@@ -1,26 +1,32 @@
-/* eslint-disable no-console */
+// import { useEffect } from 'react';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import Catalog from '../../components/catalog/catalog';
 import FilmCardDescp from '../../components/film-card/film-card-desc';
 import FilmCardPoster from '../../components/film-card/film-card-poster';
+// import LoadingScreen from '../../pages/loading-screen/loading-screen';
+
 import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus, HeaderCondition } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
+// import { getPromoFilm } from '../../store/films-data/selectors';
+// import { fetchPromoFilmAction } from '../../store/api-actions';
+
 import { getallFilmsList } from '../../store/films-data/selectors';
-// import { FilmStructure } from '../../types/films';
-
-// type MainFilmProps = {
-//   filmCard: FilmStructure;
-// };
-
 
 function MainScreen(): JSX.Element {
-  // const {filmCard} = props;
   const allFilmListFromState = useAppSelector(getallFilmsList);
+  const filmCard = allFilmListFromState[0];
+  // const dispatch = useAppDispatch();
+  // const filmCard = useAppSelector(getPromoFilm);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  const filmCard = allFilmListFromState[0];
+  // useEffect(() => {
+  //   dispatch(fetchPromoFilmAction());
+  // }, [dispatch]);
+  // if (!filmCard) {
+  //   return <LoadingScreen />;
+  // }
 
   return (
     <>

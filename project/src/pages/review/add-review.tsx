@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import Logo from '../../components/logo/logo';
 import AddReviewForm from '../../components/add-review-item/add-review-item';
 import UserBlock from '../../components/user-block/user-block';
@@ -17,12 +16,16 @@ function AddReview(): JSX.Element {
   const allFilmListFromState = useAppSelector(getallFilmsList);
 
   const params = useParams();
+  // так ли или вызывать как один фильм?
   const filmExample = allFilmListFromState.find(
     (item) => item.id === Number(params.id)
   ) as FilmStructure;
 
   return (
-    <section className="film-card film-card--full">
+    <section
+      className="film-card film-card--full"
+      style={{ background: filmExample.backgroundColor }}
+    >
       <div className="film-card__header">
         <div className="film-card__bg">
           <img src={filmExample.previewImage} alt={filmExample.name} />

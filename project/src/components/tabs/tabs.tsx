@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { FilmStructure, FilmComment } from '../../types/films';
 import Tab from '../tabs/tab-button';
 import Details from './details';
@@ -17,7 +16,6 @@ function Tabs(props: FilmProps): JSX.Element {
   const { filmExample } = props;
 
   const comments: FilmComment[] = useAppSelector(getCommentsList);
-  console.log(comments);
   const tabFromState = useAppSelector(gettabFromState);
 
   const tabsSectionsArray = Object.values(TabsSections);

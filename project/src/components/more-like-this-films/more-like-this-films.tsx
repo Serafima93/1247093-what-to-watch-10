@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import FilmCard from '../../components/film-card/film-card';
 
 import { useAppSelector } from '../../hooks';

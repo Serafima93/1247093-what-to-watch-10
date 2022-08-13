@@ -1,4 +1,6 @@
+/* eslint-disable no-console */
 import { FilmStructure } from '../../types/films';
+import { getTimeFromMins } from '../../utils';
 
 type detailedCardParameters = {
   detailedCardStructure: FilmStructure;
@@ -33,7 +35,7 @@ function Details(props: detailedCardParameters): JSX.Element {
           <p className="film-card__details-item">
             <strong className="film-card__details-name">Run Time</strong>
             <span className="film-card__details-value">
-              {detailedCardStructure.runTime}
+              {getTimeFromMins(detailedCardStructure.runTime)}
             </span>
           </p>
           <p className="film-card__details-item">

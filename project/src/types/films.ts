@@ -16,7 +16,6 @@ export type FilmStructure = {
   id: number;
   released: number;
   isFavorite: boolean;
-  mark: string;
 };
 
 export type FilmComment = {

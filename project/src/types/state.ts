@@ -15,6 +15,7 @@ export type FilmsData = {
   similarListFromState: Films;
   commentsList: FilmComment[];
   favoriteFilms: Films;
+  promoFilm: FilmStructure;
 };
 
 export type FilmProcess = {

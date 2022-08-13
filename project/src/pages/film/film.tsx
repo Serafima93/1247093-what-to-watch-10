@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import Header from '../../components/header/header';
 import Tabs from '../../components/tabs/tabs';
 import Footer from '../../components/footer/footer';
@@ -22,7 +21,10 @@ function Film(props: FilmProps): JSX.Element {
 
   return (
     <>
-      <section className="film-card film-card--full">
+      <section
+        className="film-card film-card--full"
+        style={{ background: filmExample.backgroundColor }}
+      >
         <div className="film-card__hero">
           <Header filmCard={filmExample} />
 

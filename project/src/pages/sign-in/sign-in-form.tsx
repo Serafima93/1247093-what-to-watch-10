@@ -51,6 +51,8 @@ function SignInForm(): JSX.Element {
             placeholder="Password"
             name="user-password"
             id="user-password"
+            // как изменить подсказку?
+            pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{2,50})$"
           />
           <label
             className="sign-in__label visually-hidden"
