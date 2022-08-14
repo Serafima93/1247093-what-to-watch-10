@@ -5,7 +5,7 @@ import ReviewList from './reviews';
 import Overview from './overview';
 import { TabsSections} from '../../const';
 import { useAppSelector } from '../../hooks';
-import { gettabFromState } from '../../store/films-process/selectors';
+import { getTabFromState } from '../../store/films-process/selectors';
 import { getCommentsList } from '../../store/films-data/selectors';
 
 type FilmProps = {
@@ -16,7 +16,7 @@ function Tabs(props: FilmProps): JSX.Element {
   const { filmExample } = props;
 
   const comments: FilmComment[] = useAppSelector(getCommentsList);
-  const tabFromState = useAppSelector(gettabFromState);
+  const tabFromState = useAppSelector(getTabFromState);
 
   const tabsSectionsArray = Object.values(TabsSections);
 

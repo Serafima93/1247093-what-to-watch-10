@@ -19,24 +19,26 @@ function FilmCard(props: FilmCardProps): JSX.Element {
   const [userMouse, setUserMouse] = useState(filmCard);
   const [isVisibleFilmInfo, setVisibleFilmInfo] = useState(true);
 
+  const handleMouseInter = () => {
+    setUserMouse(userMouse);
+    setTimeout(() => {
+      setVisibleFilmInfo((prevState) => !prevState);
+    }, 1000);
+  };
+
+  const handleFilmCardClick = () => {
+    navigate(`/films/${filmCard.id}`);
+    dispatch(resetFilmsData());
+    dispatch(resetFilms());
+    dispatch(fetchFilmAction(filmCard.id.toString()));
+  };
+
   return (
     <article
       className="small-film-card catalog__films-card"
-      onMouseEnter={() => {
-        setUserMouse(userMouse);
-        setTimeout(() => {
-          setVisibleFilmInfo((prevState) => !prevState);
-        }, 1000);
-      }}
-      onMouseLeave={() => {
-        setVisibleFilmInfo(!isVisibleFilmInfo);
-      }}
-      onClick={() => {
-        navigate(`/films/${filmCard.id}`);
-        dispatch(resetFilmsData());
-        dispatch(resetFilms());
-        dispatch(fetchFilmAction(filmCard.id.toString()));
-      }}
+      onMouseEnter={handleMouseInter}
+      onMouseLeave={() => {setVisibleFilmInfo(!isVisibleFilmInfo);}}
+      onClick={handleFilmCardClick}
     >
       <div className="small-film-card__image">
         {isVisibleFilmInfo ? (

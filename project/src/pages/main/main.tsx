@@ -9,16 +9,14 @@ import FilmCardPoster from '../../components/film-card/film-card-poster';
 import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus, HeaderCondition } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-// import { getPromoFilm } from '../../store/films-data/selectors';
+import { getPromoFilm } from '../../store/films-data/selectors';
 // import { fetchPromoFilmAction } from '../../store/api-actions';
 
-import { getallFilmsList } from '../../store/films-data/selectors';
 
 function MainScreen(): JSX.Element {
-  const allFilmListFromState = useAppSelector(getallFilmsList);
-  const filmCard = allFilmListFromState[0];
+
   // const dispatch = useAppDispatch();
-  // const filmCard = useAppSelector(getPromoFilm);
+  const filmCard = useAppSelector(getPromoFilm);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   // useEffect(() => {

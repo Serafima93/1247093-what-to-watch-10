@@ -9,11 +9,11 @@ import { useParams } from 'react-router-dom';
 import { AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { getallFilmsList } from '../../store/films-data/selectors';
+import { getAllFilmsList } from '../../store/films-data/selectors';
 
 function AddReview(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const allFilmListFromState = useAppSelector(getallFilmsList);
+  const allFilmListFromState = useAppSelector(getAllFilmsList);
 
   const params = useParams();
   // так ли или вызывать как один фильм?

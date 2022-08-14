@@ -2,11 +2,11 @@ import { FilmStructure } from '../../types/films';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useAppSelector } from '../../hooks';
-import { getallFilmsList } from '../../store/films-data/selectors';
+import { getAllFilmsList } from '../../store/films-data/selectors';
 import { getTimeFromMins } from '../../utils';
 
 function Player(): JSX.Element {
-  const filmsList = useAppSelector(getallFilmsList);
+  const filmsList = useAppSelector(getAllFilmsList);
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(true);
@@ -16,7 +16,7 @@ function Player(): JSX.Element {
   const navigate = useNavigate();
   const params = useParams();
 
-  // такой же как и в ревью вопрос
+  // такой же как и в ревью вопрос.Делаем плеера из списка фильмов или же по запросу.
   const filmExample = filmsList.find(
     (item) => item.id === Number(params.id)
   ) as FilmStructure;

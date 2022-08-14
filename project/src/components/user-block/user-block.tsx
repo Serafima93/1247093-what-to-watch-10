@@ -10,6 +10,13 @@ function UserBlock(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const handleAvatarClick = (
+    evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    evt.preventDefault();
+    dispatch(logoutAction());
+  };
+
   return (
     <ul className="user-block">
       <li className="user-block__item">
@@ -24,16 +31,7 @@ function UserBlock(): JSX.Element {
         </div>
       </li>
       <li className="user-block__item">
-        <Link
-          className="user-block__link"
-          // Лучше объявить отдельную функцию внутри UserBlock, и здесь ее по имени указать, а не объявлять на месте
-          // не очень поняла, что имеется ввиду
-          onClick={(evt) => {
-            evt.preventDefault();
-            dispatch(logoutAction());
-          }}
-          to="/"
-        >
+        <Link className="user-block__link" onClick={handleAvatarClick} to="/">
           Sign out
         </Link>
       </li>

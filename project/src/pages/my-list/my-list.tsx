@@ -1,3 +1,4 @@
+
 import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 import Footer from '../../components/footer/footer';
@@ -8,6 +9,7 @@ import { getFavotiteFilms } from '../../store/films-data/selectors';
 
 function MyList(): JSX.Element {
   const films = useAppSelector(getFavotiteFilms);
+
 
   return (
     <div className="user-page">

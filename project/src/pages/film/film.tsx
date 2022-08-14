@@ -5,19 +5,29 @@ import MoreLikeThisFilms from '../../components/more-like-this-films/more-like-t
 import FilmCardPoster from '../../components/film-card/film-card-poster';
 import FilmCardDescp from '../../components/film-card/film-card-desc';
 import { useAppSelector } from '../../hooks';
-import { FilmStructure } from '../../types/films';
 import { AuthorizationStatus, HeaderCondition } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-// import { getFilm } from '../../store/films-data/selectors';
+import { getFilm } from '../../store/films-data/selectors';
+// import { useEffect } from 'react';
+// import { useParams } from 'react-router-dom';
+// import { fetchFilmAction } from '../../store/api-actions';
 
-type FilmProps = {
-  filmExample: FilmStructure;
-};
 
-function Film(props: FilmProps): JSX.Element {
-  const { filmExample } = props;
-  // const filmExample = useAppSelector(getFilm);
+function Film(): JSX.Element {
+  // const dispatch = useAppDispatch();
+  const filmExample = useAppSelector(getFilm);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  // const { id } = useParams();
+
+  // useEffect(() => {
+  //   if (id) {
+  //     dispatch(fetchFilmAction(id));
+  //   }
+  // }, [dispatch, id]);
+
+  // useEffect(() => {
+  //   dispatch(fetchFilmAction(id as string));
+  // }, [dispatch,id]);
 
   return (
     <>

@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 import { FilmStructure, Films } from '../../types/films';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addFavoriteFilmAction } from '../../store/api-actions';
 import { FavoriteFilmData } from '../../types/favorite-film-data';
@@ -19,6 +20,10 @@ function Buttons(props: ButtonsProps): JSX.Element {
   const [filmsCount, setfilmsCount] = useState(filmsFromServer.length);
   const [inList, setInList] = useState(filmExample.isFavorite);
 
+  useEffect(() => {
+    console.log('Hello from useEffect');
+    return () => console.log('componentWillUnmount');
+  }, [dispatch]);
 
   const getFilmStatus = (films: Films) => {
     let filmsId: number[] = [];
@@ -45,7 +50,7 @@ function Buttons(props: ButtonsProps): JSX.Element {
     onClick({
       id: filmExample.id,
       status: filmStatus,
-    } );
+    });
   };
 
   return (
