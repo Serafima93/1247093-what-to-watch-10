@@ -13,13 +13,12 @@ import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { getLoadedDataStatus} from '../../store/films-data/selectors';
-
+import { getLoadedDataStatus } from '../../store/films-data/selectors';
 
 function App(): JSX.Element {
-
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoading = useAppSelector(getLoadedDataStatus);
+
 
   if (isCheckedAuth(authorizationStatus) || isDataLoading) {
     return <LoadingScreen />;
@@ -28,14 +27,8 @@ function App(): JSX.Element {
   return (
     <HistoryRouter history={browserHistory}>
       <Routes>
-        <Route
-          path={AppRoute.Main}
-          element={<MainScreen/>}
-        />
-        <Route
-          path={AppRoute.Film}
-          element={<Film/>}
-        />
+        <Route path={AppRoute.Main} element={<MainScreen />} />
+        <Route path={AppRoute.Film} element={<Film />} />
         <Route path={AppRoute.Login} element={<SignIn />} />
         <Route path={AppRoute.Player} element={<Player />} />
         <Route

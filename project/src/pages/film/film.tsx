@@ -1,33 +1,40 @@
+/* eslint-disable no-console */
 import Header from '../../components/header/header';
 import Tabs from '../../components/tabs/tabs';
 import Footer from '../../components/footer/footer';
 import MoreLikeThisFilms from '../../components/more-like-this-films/more-like-this-films';
 import FilmCardPoster from '../../components/film-card/film-card-poster';
 import FilmCardDescp from '../../components/film-card/film-card-desc';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { AuthorizationStatus, HeaderCondition } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { getFilm } from '../../store/films-data/selectors';
-// import { useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
-// import { fetchFilmAction } from '../../store/api-actions';
-
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { fetchFilmAction } from '../../store/api-actions';
+import { getLoadedDataStatusFilm } from '../../store/films-data/selectors';
+import Spiner from '../../components/spiner/spiner';
 
 function Film(): JSX.Element {
-  // const dispatch = useAppDispatch();
-  const filmExample = useAppSelector(getFilm);
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  // const { id } = useParams();
+  const isDataLoadingFilm = useAppSelector(getLoadedDataStatusFilm);
+  const filmExample = useAppSelector(getFilm);
 
-  // useEffect(() => {
-  //   if (id) {
-  //     dispatch(fetchFilmAction(id));
-  //   }
-  // }, [dispatch, id]);
+  useEffect(() => {
+    dispatch(fetchFilmAction(id as string));
+  }, [dispatch, id]);
 
-  // useEffect(() => {
-  //   dispatch(fetchFilmAction(id as string));
-  // }, [dispatch,id]);
+  useEffect(() => {
+    console.log('Hello from useEffect');
+    return () => console.log('componentWillUnmount');
+  }, [dispatch]);
+
+  if (isDataLoadingFilm) {
+    return <Spiner />;
+    // не работает при попытке зайти через URL
+  }
 
   return (
     <>

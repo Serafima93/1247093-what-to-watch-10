@@ -4,22 +4,24 @@ import UserBlock from '../../components/user-block/user-block';
 import LoginAvatar from '../../components/user-block/login-avatar';
 import FilmCardPoster from '../../components/film-card/film-card-poster';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
-import { FilmStructure } from '../../types/films';
-import { useParams } from 'react-router-dom';
+// import { FilmStructure } from '../../types/films';
+// import { useParams } from 'react-router-dom';
 import { AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { getAllFilmsList } from '../../store/films-data/selectors';
+// import { getAllFilmsList } from '../../store/films-data/selectors';
+import { getFilm } from '../../store/films-data/selectors';
 
 function AddReview(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const allFilmListFromState = useAppSelector(getAllFilmsList);
+  // const allFilmListFromState = useAppSelector(getAllFilmsList);
 
-  const params = useParams();
+  // const params = useParams();
   // так ли или вызывать как один фильм?
-  const filmExample = allFilmListFromState.find(
-    (item) => item.id === Number(params.id)
-  ) as FilmStructure;
+  // const filmExample = allFilmListFromState.find(
+  //   (item) => item.id === Number(params.id)
+  // ) as FilmStructure;
+  const filmExample = useAppSelector(getFilm);
 
   return (
     <section

@@ -16,6 +16,8 @@ export type FilmsData = {
   commentsList: FilmComment[];
   favoriteFilms: Films;
   promoFilm: FilmStructure;
+  isDataLoadingFilm: boolean;
+  isDataLoadingPromo: boolean;
 };
 
 export type FilmProcess = {

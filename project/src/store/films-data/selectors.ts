@@ -14,3 +14,5 @@ export const getCommentsList = (state: State): FilmComment[] =>state[NameSpace.D
 export const getFavotiteFilms = (state: State): Films =>state[NameSpace.Data].favoriteFilms;
 export const getPromoFilm = (state: State): FilmStructure =>state[NameSpace.Data].promoFilm;
 
+export const getLoadedDataStatusFilm = (state: State): boolean =>state[NameSpace.Data].isDataLoadingFilm;
+export const getLoadedDataStatusPromo = (state: State): boolean =>state[NameSpace.Data].isDataLoadingPromo;

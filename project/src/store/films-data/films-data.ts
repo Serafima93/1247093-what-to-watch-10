@@ -4,9 +4,9 @@ import { FilmsData } from '../../types/state';
 import {
   fetchFilmsAction,
   fetchFilmAction,
-  fetchSimilarFilmsAction,
-  fetchCommentsAction,
-  fetchFavoriteFilmsAction,
+  // fetchSimilarFilmsAction,
+  // fetchCommentsAction,
+  // fetchFavoriteFilmsAction,
   fetchPromoFilmAction,
 } from '../api-actions';
 import { changeGenre, resetFilmsData } from '../actions';
@@ -18,6 +18,8 @@ const initialState: FilmsData = {
   allFilmsList: [],
   similarListFromState: [],
   isDataLoading: false,
+  isDataLoadingFilm: false,
+  isDataLoadingPromo: false,
   film: {} as FilmStructure,
   promoFilm: {} as FilmStructure,
   commentsList: [],
@@ -39,33 +41,33 @@ export const filmData = createSlice({
         state.isDataLoading = false;
       })
       .addCase(fetchFilmAction.pending, (state) => {
-        state.isDataLoading = true;
+        state.isDataLoadingFilm = true;
       })
       .addCase(fetchFilmAction.fulfilled, (state, action) => {
         state.film = action.payload;
-        state.isDataLoading = false;
+        state.isDataLoadingFilm = false;
       })
-      .addCase(fetchSimilarFilmsAction.pending, (state) => {
-        state.isDataLoading = true;
-      })
-      .addCase(fetchSimilarFilmsAction.fulfilled, (state, action) => {
-        state.similarListFromState = action.payload;
-        state.isDataLoading = false;
-      })
-      .addCase(fetchCommentsAction.pending, (state) => {
-        state.isDataLoading = true;
-      })
-      .addCase(fetchCommentsAction.fulfilled, (state, action) => {
-        state.commentsList = action.payload;
-        state.isDataLoading = false;
-      })
-      .addCase(fetchFavoriteFilmsAction.pending, (state) => {
-        state.isDataLoading = true;
-      })
-      .addCase(fetchFavoriteFilmsAction.fulfilled, (state, action) => {
-        state.favoriteFilms = action.payload;
-        state.isDataLoading = false;
-      })
+      // .addCase(fetchSimilarFilmsAction.pending, (state) => {
+      //   state.isDataLoading = true;
+      // })
+      // .addCase(fetchSimilarFilmsAction.fulfilled, (state, action) => {
+      //   state.similarListFromState = action.payload;
+      //   state.isDataLoading = false;
+      // })
+      // .addCase(fetchCommentsAction.pending, (state) => {
+      //   state.isDataLoading = true;
+      // })
+      // .addCase(fetchCommentsAction.fulfilled, (state, action) => {
+      //   state.commentsList = action.payload;
+      //   state.isDataLoading = false;
+      // })
+      // .addCase(fetchFavoriteFilmsAction.pending, (state) => {
+      //   state.isDataLoading = true;
+      // })
+      // .addCase(fetchFavoriteFilmsAction.fulfilled, (state, action) => {
+      //   state.favoriteFilms = action.payload;
+      //   state.isDataLoading = false;
+      // })
       .addCase(changeGenre, (state, action) => {
         state.genreFromState = action.payload;
         state.filmListFromState =
@@ -78,11 +80,11 @@ export const filmData = createSlice({
         // пришлось поделить действие, ибо не знаю как выйти к полному стейту
       })
       .addCase(fetchPromoFilmAction.pending, (state) => {
-        state.isDataLoading = true;
+        state.isDataLoadingPromo = true;
       })
       .addCase(fetchPromoFilmAction.fulfilled, (state, action) => {
         state.promoFilm = action.payload;
-        state.isDataLoading = false;
+        state.isDataLoadingPromo = false;
       });
     // Что ты имеешь в виду под полным стейтом? - например state из film-process - state.MaxFilms
   },

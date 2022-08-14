@@ -1,25 +1,28 @@
-import { FilmStructure } from '../../types/films';
-import { useParams, useNavigate } from 'react-router-dom';
+// import { FilmStructure } from '../../types/films';
+import { /*useParams,*/ useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useAppSelector } from '../../hooks';
-import { getAllFilmsList } from '../../store/films-data/selectors';
+// import { getAllFilmsList } from '../../store/films-data/selectors';
 import { getTimeFromMins } from '../../utils';
+import { getFilm } from '../../store/films-data/selectors';
 
 function Player(): JSX.Element {
-  const filmsList = useAppSelector(getAllFilmsList);
+
+  // const filmsList = useAppSelector(getAllFilmsList);
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(true);
+  const filmExample = useAppSelector(getFilm);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const navigate = useNavigate();
-  const params = useParams();
+  // const params = useParams();
 
   // такой же как и в ревью вопрос.Делаем плеера из списка фильмов или же по запросу.
-  const filmExample = filmsList.find(
-    (item) => item.id === Number(params.id)
-  ) as FilmStructure;
+  // const filmExample = filmsList.find(
+  //   (item) => item.id === Number(params.id)
+  // ) as FilmStructure;
 
   useEffect(() => {
     if (videoRef.current === null) {
