@@ -2,7 +2,6 @@ import { createAction } from '@reduxjs/toolkit';
 import { Films } from '../types/films';
 import { AppRoute } from '../const';
 
-
 export const resetFilms = createAction('film/resetFilms');
 export const resetFilmsData = createAction('data/resetFilms');
 

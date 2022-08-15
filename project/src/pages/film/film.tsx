@@ -14,23 +14,29 @@ import { useParams } from 'react-router-dom';
 import { fetchFilmAction } from '../../store/api-actions';
 import { getLoadedDataStatusFilm } from '../../store/films-data/selectors';
 import Spiner from '../../components/spiner/spiner';
+import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 
 function Film(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoadingFilm = useAppSelector(getLoadedDataStatusFilm);
+
   const filmExample = useAppSelector(getFilm);
 
   useEffect(() => {
     dispatch(fetchFilmAction(id as string));
   }, [dispatch, id]);
 
+  if(filmExample.name === '') {
+    return <NotFoundScreen />;
+  }
 
   if (isDataLoadingFilm) {
     return <Spiner />;
-    // Добавить обработку ошибок
+    // Добавить обработку ошибок если с сервера
   }
+
 
   return (
     <>

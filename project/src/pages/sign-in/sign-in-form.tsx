@@ -51,7 +51,7 @@ function SignInForm(): JSX.Element {
             placeholder="Password"
             name="user-password"
             id="user-password"
-            // как изменить подсказку?
+            // как изменить текст всплывающей подсказки?
             pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{2,50})$"
           />
           <label

@@ -17,3 +17,4 @@ export const getLoadedDataStatus = (state: State): boolean =>state[NameSpace.Dat
 export const getLoadedDataStatusFilm = (state: State): boolean =>state[NameSpace.Data].isDataLoadingFilm;
 export const getLoadedDataStatusPromo = (state: State): boolean =>state[NameSpace.Data].isDataLoadingPromo;
 export const getLoadedDataStatusFavorite = (state: State): boolean =>state[NameSpace.Data].isDataLoadingFavoriteFilms;
+
