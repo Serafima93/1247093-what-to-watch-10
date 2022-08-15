@@ -18,6 +18,9 @@ export type FilmsData = {
   promoFilm: FilmStructure;
   isDataLoadingFilm: boolean;
   isDataLoadingPromo: boolean;
+  isDataLoadingSimilarFilms: boolean;
+  isDataLoadingComments: boolean;
+  isDataLoadingFavoriteFilms: boolean;
 };
 
 export type FilmProcess = {

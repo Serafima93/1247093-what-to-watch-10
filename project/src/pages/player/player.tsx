@@ -1,28 +1,26 @@
-// import { FilmStructure } from '../../types/films';
-import { /*useParams,*/ useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
-import { useAppSelector } from '../../hooks';
-// import { getAllFilmsList } from '../../store/films-data/selectors';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { getTimeFromMins } from '../../utils';
-import { getFilm } from '../../store/films-data/selectors';
+import {
+  getFilm,
+  getLoadedDataStatusFilm,
+} from '../../store/films-data/selectors';
+import Spiner from '../../components/spiner/spiner';
+import { fetchFilmAction } from '../../store/api-actions';
 
 function Player(): JSX.Element {
-
-  // const filmsList = useAppSelector(getAllFilmsList);
+  const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(true);
   const filmExample = useAppSelector(getFilm);
+  const isDataLoadingFilm = useAppSelector(getLoadedDataStatusFilm);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const navigate = useNavigate();
-  // const params = useParams();
-
-  // такой же как и в ревью вопрос.Делаем плеера из списка фильмов или же по запросу.
-  // const filmExample = filmsList.find(
-  //   (item) => item.id === Number(params.id)
-  // ) as FilmStructure;
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (videoRef.current === null) {
@@ -38,6 +36,15 @@ function Player(): JSX.Element {
   }, [isPlaying]);
 
   const runTime = getTimeFromMins(filmExample.runTime);
+
+  useEffect(() => {
+    dispatch(fetchFilmAction(id as string));
+  }, [dispatch, id]);
+
+  if (isDataLoadingFilm) {
+    return <Spiner />;
+    // Добавить обработку ошибок
+  }
 
   return (
     <div className="player">

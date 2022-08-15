@@ -1,27 +1,35 @@
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import AddReviewForm from '../../components/add-review-item/add-review-item';
 import UserBlock from '../../components/user-block/user-block';
 import LoginAvatar from '../../components/user-block/login-avatar';
 import FilmCardPoster from '../../components/film-card/film-card-poster';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
-// import { FilmStructure } from '../../types/films';
-// import { useParams } from 'react-router-dom';
+import Spiner from '../../components/spiner/spiner';
 import { AuthorizationStatus } from '../../const';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-// import { getAllFilmsList } from '../../store/films-data/selectors';
+import { getLoadedDataStatusFilm } from '../../store/films-data/selectors';
 import { getFilm } from '../../store/films-data/selectors';
+import { fetchFilmAction } from '../../store/api-actions';
 
 function AddReview(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  // const allFilmListFromState = useAppSelector(getAllFilmsList);
+  const isDataLoadingFilm = useAppSelector(getLoadedDataStatusFilm);
 
-  // const params = useParams();
-  // так ли или вызывать как один фильм?
-  // const filmExample = allFilmListFromState.find(
-  //   (item) => item.id === Number(params.id)
-  // ) as FilmStructure;
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
   const filmExample = useAppSelector(getFilm);
+
+  useEffect(() => {
+    dispatch(fetchFilmAction(id as string));
+  }, [dispatch, id]);
+
+  if (isDataLoadingFilm) {
+    return <Spiner />;
+    // Добавить обработку ошибок
+  }
 
   return (
     <section

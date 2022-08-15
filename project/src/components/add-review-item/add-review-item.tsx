@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { ratingStars, CommentFormButton, CommentLength } from '../../const';
 import { FilmStructure } from '../../types/films';
@@ -13,14 +14,14 @@ type AddReviewItemProps = {
 
 function AddReviewForm(props: AddReviewItemProps): JSX.Element {
   const { filmExample } = props;
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [userReview, setUserReview] = useState('Review text');
   const [userRating, setRating] = useState(0);
   const [disabledSubmitButton, setDisabledSubmitButton] = useState(
     CommentFormButton.Blocked
   );
   const [disabledForm, setDisabledForm] = useState(false);
-
-  const dispatch = useAppDispatch();
 
   const formSentCondition =
     userReview.length >= CommentLength.MinLength &&
@@ -36,6 +37,7 @@ function AddReviewForm(props: AddReviewItemProps): JSX.Element {
   const onSubmit = (formData: CommentData) => {
     setDisabledForm(true);
     dispatch(addCommentAction(formData));
+    navigate(`/films/${filmExample.id}`);
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {

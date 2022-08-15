@@ -1,15 +1,30 @@
-
 import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 import Footer from '../../components/footer/footer';
 import FilmCard from '../../components/film-card/film-card';
+import Spiner from '../../components/spiner/spiner';
 import { FilmStructure } from '../../types/films';
-import { useAppSelector } from '../../hooks';
-import { getFavotiteFilms } from '../../store/films-data/selectors';
+import { useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import {
+  getFavotiteFilms,
+  getLoadedDataStatusFavorite,
+} from '../../store/films-data/selectors';
+import { fetchFavoriteFilmsAction } from '../../store/api-actions';
 
 function MyList(): JSX.Element {
+  const dispatch = useAppDispatch();
   const films = useAppSelector(getFavotiteFilms);
+  const isDataLoadingFavorite = useAppSelector(getLoadedDataStatusFavorite);
 
+  useEffect(() => {
+    dispatch(fetchFavoriteFilmsAction());
+  }, [dispatch]);
+
+  if (isDataLoadingFavorite) {
+    return <Spiner />;
+    // Добавить обработку ошибок
+  }
 
   return (
     <div className="user-page">
@@ -17,8 +32,7 @@ function MyList(): JSX.Element {
         <Logo />
 
         <h1 className="page-title user-page__title">
-          My list{' '}
-          <span className="user-page__film-count">{films.length}</span>
+          My list <span className="user-page__film-count">{films.length}</span>
         </h1>
         <UserBlock />
       </header>

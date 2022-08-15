@@ -1,30 +1,33 @@
-// import { useEffect } from 'react';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import Catalog from '../../components/catalog/catalog';
 import FilmCardDescp from '../../components/film-card/film-card-desc';
 import FilmCardPoster from '../../components/film-card/film-card-poster';
-// import LoadingScreen from '../../pages/loading-screen/loading-screen';
-
-import { useAppSelector } from '../../hooks';
+import Spiner from '../../components/spiner/spiner';
+import { useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { AuthorizationStatus, HeaderCondition } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { getPromoFilm } from '../../store/films-data/selectors';
-// import { fetchPromoFilmAction } from '../../store/api-actions';
-
+import {
+  getPromoFilm,
+  getLoadedDataStatusPromo,
+} from '../../store/films-data/selectors';
+import { fetchPromoFilmAction } from '../../store/api-actions';
 
 function MainScreen(): JSX.Element {
-
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const filmCard = useAppSelector(getPromoFilm);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isDataLoadingPromoFilm = useAppSelector(getLoadedDataStatusPromo);
 
-  // useEffect(() => {
-  //   dispatch(fetchPromoFilmAction());
-  // }, [dispatch]);
-  // if (!filmCard) {
-  //   return <LoadingScreen />;
-  // }
+  useEffect(() => {
+    dispatch(fetchPromoFilmAction());
+  }, [dispatch]);
+
+  if (isDataLoadingPromoFilm) {
+    return <Spiner />;
+    // Добавить обработку ошибок
+  }
 
   return (
     <>

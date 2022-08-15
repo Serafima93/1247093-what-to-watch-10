@@ -26,14 +26,10 @@ function Film(): JSX.Element {
     dispatch(fetchFilmAction(id as string));
   }, [dispatch, id]);
 
-  useEffect(() => {
-    console.log('Hello from useEffect');
-    return () => console.log('componentWillUnmount');
-  }, [dispatch]);
 
   if (isDataLoadingFilm) {
     return <Spiner />;
-    // не работает при попытке зайти через URL
+    // Добавить обработку ошибок
   }
 
   return (

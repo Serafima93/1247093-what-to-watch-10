@@ -1,8 +1,13 @@
+/* eslint-disable no-console */
+import { useEffect } from 'react';
 import { FilmStructure, Films } from '../../types/films';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { addFavoriteFilmAction } from '../../store/api-actions';
+import {
+  addFavoriteFilmAction,
+  fetchFavoriteFilmsAction,
+} from '../../store/api-actions';
 import { FavoriteFilmData } from '../../types/favorite-film-data';
 import { getFavotiteFilms } from '../../store/films-data/selectors';
 import { FavoriteFilm } from '../../const';
@@ -18,6 +23,12 @@ function Buttons(props: ButtonsProps): JSX.Element {
   const filmsFromServer = useAppSelector(getFavotiteFilms);
   const [filmsCount, setfilmsCount] = useState(filmsFromServer.length);
   const [inList, setInList] = useState(filmExample.isFavorite);
+
+  useEffect(() => {
+    // Доделать число
+    dispatch(fetchFavoriteFilmsAction());
+  }, [inList]);
+
 
   const getFilmStatus = (films: Films) => {
     let filmsId: number[] = [];
@@ -46,6 +57,10 @@ function Buttons(props: ButtonsProps): JSX.Element {
       status: filmStatus,
     });
   };
+
+  // useEffect(() => {
+  //   dispatch(fetchFavoriteFilmsAction());
+  // }, [dispatch]);
 
   return (
     <>

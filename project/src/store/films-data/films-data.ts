@@ -4,13 +4,33 @@ import { FilmsData } from '../../types/state';
 import {
   fetchFilmsAction,
   fetchFilmAction,
-  // fetchSimilarFilmsAction,
-  // fetchCommentsAction,
-  // fetchFavoriteFilmsAction,
+  fetchSimilarFilmsAction,
+  fetchCommentsAction,
+  fetchFavoriteFilmsAction,
   fetchPromoFilmAction,
 } from '../api-actions';
 import { changeGenre, resetFilmsData } from '../actions';
 import { FilmStructure } from '../../types/films';
+
+const filmMask: FilmStructure = {
+  name: '',
+  posterImage: '',
+  previewImage: '',
+  backgroundImage: '',
+  backgroundColor: '',
+  videoLink: '',
+  previewVideoLink: '',
+  description: '',
+  rating: 0,
+  scoresCount: 0,
+  director: '',
+  starring: [],
+  runTime: 0,
+  genre: '',
+  id: -1,
+  released: 0,
+  isFavorite: false,
+};
 
 const initialState: FilmsData = {
   genreFromState: 'All genres',
@@ -20,8 +40,11 @@ const initialState: FilmsData = {
   isDataLoading: false,
   isDataLoadingFilm: false,
   isDataLoadingPromo: false,
-  film: {} as FilmStructure,
-  promoFilm: {} as FilmStructure,
+  isDataLoadingSimilarFilms: false,
+  isDataLoadingComments: false,
+  isDataLoadingFavoriteFilms: false,
+  film: filmMask,
+  promoFilm: filmMask,
   commentsList: [],
   favoriteFilms: [],
 };
@@ -47,33 +70,34 @@ export const filmData = createSlice({
         state.film = action.payload;
         state.isDataLoadingFilm = false;
       })
-      // .addCase(fetchSimilarFilmsAction.pending, (state) => {
-      //   state.isDataLoading = true;
-      // })
-      // .addCase(fetchSimilarFilmsAction.fulfilled, (state, action) => {
-      //   state.similarListFromState = action.payload;
-      //   state.isDataLoading = false;
-      // })
-      // .addCase(fetchCommentsAction.pending, (state) => {
-      //   state.isDataLoading = true;
-      // })
-      // .addCase(fetchCommentsAction.fulfilled, (state, action) => {
-      //   state.commentsList = action.payload;
-      //   state.isDataLoading = false;
-      // })
-      // .addCase(fetchFavoriteFilmsAction.pending, (state) => {
-      //   state.isDataLoading = true;
-      // })
-      // .addCase(fetchFavoriteFilmsAction.fulfilled, (state, action) => {
-      //   state.favoriteFilms = action.payload;
-      //   state.isDataLoading = false;
-      // })
+      .addCase(fetchSimilarFilmsAction.pending, (state) => {
+        state.isDataLoadingSimilarFilms = true;
+      })
+      .addCase(fetchSimilarFilmsAction.fulfilled, (state, action) => {
+        state.similarListFromState = action.payload;
+        state.isDataLoadingSimilarFilms = false;
+      })
+      .addCase(fetchCommentsAction.pending, (state) => {
+        state.isDataLoadingComments = true;
+      })
+      .addCase(fetchCommentsAction.fulfilled, (state, action) => {
+        state.commentsList = action.payload;
+        state.isDataLoadingComments = false;
+      })
+      .addCase(fetchFavoriteFilmsAction.pending, (state) => {
+        state.isDataLoadingFavoriteFilms = true;
+      })
+      .addCase(fetchFavoriteFilmsAction.fulfilled, (state, action) => {
+        state.favoriteFilms = action.payload;
+        state.isDataLoadingFavoriteFilms = false;
+      })
       .addCase(changeGenre, (state, action) => {
         state.genreFromState = action.payload;
         state.filmListFromState =
           action.payload === 'All genres'
             ? state.allFilmsList
-            : state.filmListFromState.filter((item) => item.genre === action.payload);})
+            : state.filmListFromState.filter((item) => item.genre === action.payload);
+      })
       .addCase(resetFilmsData, (state) => {
         state.filmListFromState = state.allFilmsList;
         state.genreFromState = 'All genres';

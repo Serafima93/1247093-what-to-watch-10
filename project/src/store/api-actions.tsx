@@ -120,7 +120,6 @@ export const addCommentAction = createAsyncThunk<
   'data/addComment',
   async ({ comment, rating, id }, { dispatch, extra: api }) => {
     await api.post<CommentData>(`/comments/${id}`, { comment, rating });
-    dispatch(redirectToRoute(AppRoute.Film));
   }
 );
 
