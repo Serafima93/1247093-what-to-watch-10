@@ -45,6 +45,7 @@ export enum NameSpace {
   Data = 'DATA',
   Film = 'FILM',
   User = 'USER',
+  FilmFromServer = 'FILM_SERVER',
 }
 
 export const HeaderCondition = {
@@ -66,7 +67,4 @@ export enum CommentLength {
   MaxLength = 400,
 }
 
-export const CommentFormButton = {
-  Unblocked: false,
-  Blocked: true,
-};
+

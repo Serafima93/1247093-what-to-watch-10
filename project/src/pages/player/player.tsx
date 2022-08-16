@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 import {
   getFilm,
   getLoadedDataStatusFilm,
-} from '../../store/films-data/selectors';
+} from '../../store/film-data/selectors';
 import Spiner from '../../components/spiner/spiner';
 import { fetchFilmAction } from '../../store/api-actions';
 import dayjs from 'dayjs';

@@ -3,7 +3,6 @@ import { NameSpace } from '../../const';
 import { FilmsData } from '../../types/state';
 import {
   fetchFilmsAction,
-  fetchFilmAction,
   fetchSimilarFilmsAction,
   fetchCommentsAction,
   fetchFavoriteFilmsAction,
@@ -38,18 +37,18 @@ const initialState: FilmsData = {
   allFilmsList: [],
   similarListFromState: [],
   isDataLoading: false,
-  isDataLoadingFilm: false,
+  // isDataLoadingFilm: false,
   isDataLoadingPromo: false,
   isDataLoadingSimilarFilms: false,
   isDataLoadingComments: false,
   isDataLoadingFavoriteFilms: false,
-  film: filmMask,
+  // film: filmMask,
   promoFilm: filmMask,
   commentsList: [],
   favoriteFilms: [],
 };
 
-export const filmData = createSlice({
+export const filmsData = createSlice({
   name: NameSpace.Data,
   initialState,
   reducers: {},
@@ -62,13 +61,6 @@ export const filmData = createSlice({
         state.filmListFromState = action.payload;
         state.allFilmsList = action.payload;
         state.isDataLoading = false;
-      })
-      .addCase(fetchFilmAction.pending, (state) => {
-        state.isDataLoadingFilm = true;
-      })
-      .addCase(fetchFilmAction.fulfilled, (state, action) => {
-        state.film = action.payload;
-        state.isDataLoadingFilm = false;
       })
       .addCase(fetchSimilarFilmsAction.pending, (state) => {
         state.isDataLoadingSimilarFilms = true;

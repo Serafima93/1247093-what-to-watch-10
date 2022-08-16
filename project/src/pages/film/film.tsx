@@ -8,11 +8,11 @@ import FilmCardDescp from '../../components/film-card/film-card-desc';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { AuthorizationStatus, HeaderCondition } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { getFilm } from '../../store/films-data/selectors';
+import { getFilm } from '../../store/film-data/selectors';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchFilmAction } from '../../store/api-actions';
-import { getLoadedDataStatusFilm } from '../../store/films-data/selectors';
+import { getLoadedDataStatusFilm, getError } from '../../store/film-data/selectors';
 import Spiner from '../../components/spiner/spiner';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 
@@ -21,6 +21,7 @@ function Film(): JSX.Element {
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoadingFilm = useAppSelector(getLoadedDataStatusFilm);
+  const error = useAppSelector(getError);
 
   const filmExample = useAppSelector(getFilm);
 
@@ -28,15 +29,14 @@ function Film(): JSX.Element {
     dispatch(fetchFilmAction(id as string));
   }, [dispatch, id]);
 
-  if(filmExample.name === '') {
-    return <NotFoundScreen />;
-  }
 
   if (isDataLoadingFilm) {
     return <Spiner />;
     // Добавить обработку ошибок если с сервера
   }
-
+  if(error !== null) {
+    return <NotFoundScreen />;
+  }
 
   return (
     <>

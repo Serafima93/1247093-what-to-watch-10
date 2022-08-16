@@ -10,8 +10,8 @@ import Spiner from '../../components/spiner/spiner';
 import { AuthorizationStatus } from '../../const';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { getLoadedDataStatusFilm } from '../../store/films-data/selectors';
-import { getFilm } from '../../store/films-data/selectors';
+import { getLoadedDataStatusFilm } from '../../store/film-data/selectors';
+import { getFilm } from '../../store/film-data/selectors';
 import { fetchFilmAction } from '../../store/api-actions';
 
 function AddReview(): JSX.Element {

@@ -11,16 +11,21 @@ export type FilmsData = {
   allFilmsList: Films;
   isDataLoading: boolean;
   genreFromState: string;
-  film: FilmStructure;
+  // film: FilmStructure;
   similarListFromState: Films;
   commentsList: FilmComment[];
   favoriteFilms: Films;
   promoFilm: FilmStructure;
-  isDataLoadingFilm: boolean;
+  // isDataLoadingFilm: boolean;
   isDataLoadingPromo: boolean;
   isDataLoadingSimilarFilms: boolean;
   isDataLoadingComments: boolean;
   isDataLoadingFavoriteFilms: boolean;
+};
+export type FilmData = {
+  film: FilmStructure;
+  isDataLoadingFilm: boolean;
+  error: Error | null;
 };
 
 export type FilmProcess = {

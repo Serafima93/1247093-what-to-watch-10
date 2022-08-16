@@ -20,14 +20,20 @@ function Buttons(props: ButtonsProps): JSX.Element {
   const { filmExample } = props;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   const filmsFromServer = useAppSelector(getFavotiteFilms);
-  const [filmsCount, setfilmsCount] = useState(filmsFromServer.length);
+  let length = filmsFromServer.length;
+
   const [inList, setInList] = useState(filmExample.isFavorite);
+  const [filmsCount, setfilmsCount] = useState(length);
+
 
   useEffect(() => {
+
     // Доделать число
     dispatch(fetchFavoriteFilmsAction());
-  }, [inList]);
+
+  }, [dispatch]);
 
 
   const getFilmStatus = (films: Films) => {
@@ -45,9 +51,18 @@ function Buttons(props: ButtonsProps): JSX.Element {
 
   const onClick = (favoriteFilmData: FavoriteFilmData) => {
     dispatch(addFavoriteFilmAction(favoriteFilmData));
-    // Доделать изменение числа
-    setfilmsCount(filmsFromServer.length);
-    setInList(!inList);
+    if (inList === true) {
+      console.log(inList);
+      console.log(length++);
+      setfilmsCount(length = length - 1);
+      setInList(!inList);
+
+    } else {
+      console.log(inList);
+      setfilmsCount(length = length + 1);
+      console.log(length--);
+      setInList(!inList);
+    }
   };
 
   const handleSubmit = () => {
@@ -57,10 +72,6 @@ function Buttons(props: ButtonsProps): JSX.Element {
       status: filmStatus,
     });
   };
-
-  // useEffect(() => {
-  //   dispatch(fetchFavoriteFilmsAction());
-  // }, [dispatch]);
 
   return (
     <>

@@ -9,6 +9,13 @@ import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { CommentData } from '../types/comment-data';
 import { FavoriteFilmData } from '../types/favorite-film-data';
+// import {
+//   loadFilmByIdRequest,
+//   loadFilmByIdSuccess,
+//   loadFilmByIdError,
+// } from './film-data/film-data';
+// import { api as API, store } from '../store';
+
 
 export const fetchFilmsAction = createAsyncThunk<
   Films,
@@ -37,6 +44,19 @@ export const fetchFilmAction = createAsyncThunk<
   dispatch(fetchCommentsAction(_arg));
   return data;
 });
+
+// export const fetchFilmAction = createAsyncThunk(
+//   'data/fetchFilm',
+//   async (id: string) => {
+//     try {
+//       store.dispatch(loadFilmByIdRequest());
+//       const { data } = await API.get<FilmStructure>(`/films/${id}`);
+//       store.dispatch(loadFilmByIdSuccess(data));
+//     } catch (error) {
+//       store.dispatch(loadFilmByIdError(error));
+//     }
+//   }
+// );
 
 export const fetchSimilarFilmsAction = createAsyncThunk<
   Films,

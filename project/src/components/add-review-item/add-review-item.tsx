@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { ratingStars, CommentFormButton, CommentLength } from '../../const';
+import { ratingStars, CommentLength } from '../../const';
 import { FilmStructure } from '../../types/films';
 import { useAppDispatch } from '../../hooks';
 import { addCommentAction } from '../../store/api-actions';
@@ -18,24 +18,25 @@ function AddReviewForm(props: AddReviewItemProps): JSX.Element {
   const navigate = useNavigate();
   const [userReview, setUserReview] = useState('Review text');
   const [userRating, setRating] = useState(0);
-  const [disabledSubmitButton, setDisabledSubmitButton] = useState(
-    CommentFormButton.Blocked
-  );
-  const [disabledForm, setDisabledForm] = useState(false);
 
-  const formSentCondition =
+  const isMessageEntered =
     userReview.length >= CommentLength.MinLength &&
-    userReview.length <= CommentLength.MaxLength &&
-    userRating !== 0;
+    userReview.length <= CommentLength.MaxLength;
 
-  const checkValidationFormData = () => {
-    if (formSentCondition) {
-      setDisabledSubmitButton(CommentFormButton.Unblocked);
-    }
+  const isRatingSelected = userRating !== 0;
+  const formSentCondition = isMessageEntered && isRatingSelected;
+
+
+  const handleRatingChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setRating(Number(evt.target.value));
+  };
+
+  const handleReviewChange = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
+    const value = target.value;
+    setUserReview(value);
   };
 
   const onSubmit = (formData: CommentData) => {
-    setDisabledForm(true);
     dispatch(addCommentAction(formData));
     navigate(`/films/${filmExample.id}`);
   };
@@ -50,20 +51,8 @@ function AddReviewForm(props: AddReviewItemProps): JSX.Element {
         id: filmExample.id,
       });
     } else {
-      // Доделать
       <ErrorMessage />;
     }
-  };
-
-  const handleRatingChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    setRating(Number(evt.target.value));
-    checkValidationFormData();
-  };
-
-  const handleReviewChange = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
-    const value = target.value;
-    setUserReview(value);
-    checkValidationFormData();
   };
 
   return (
@@ -105,7 +94,10 @@ function AddReviewForm(props: AddReviewItemProps): JSX.Element {
             <button
               className="add-review__btn"
               type="submit"
-              disabled={disabledSubmitButton || disabledForm}
+              style={{
+                opacity: formSentCondition ? '1' : '0.4',
+                pointerEvents: formSentCondition ? 'auto' : 'none',
+              }}
             >
               Post
             </button>
