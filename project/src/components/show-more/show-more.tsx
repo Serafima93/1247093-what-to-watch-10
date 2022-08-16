@@ -6,11 +6,10 @@ import { getfilmListFromState } from '../../store/films-data/selectors';
 import { getMaxFilms, getMinFilms } from '../../store/films-process/selectors';
 
 function ShowMoreButton(): JSX.Element {
-  const dispatch = useAppDispatch();
-
   const filmsFromState = useAppSelector(getfilmListFromState);
   const incFilmsLength = useAppSelector(getMaxFilms);
   const minFilmsLength = useAppSelector(getMinFilms);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (

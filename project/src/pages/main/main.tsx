@@ -15,10 +15,11 @@ import {
 import { fetchPromoFilmAction } from '../../store/api-actions';
 
 function MainScreen(): JSX.Element {
-  const dispatch = useAppDispatch();
   const filmCard = useAppSelector(getPromoFilm);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoadingPromoFilm = useAppSelector(getLoadedDataStatusPromo);
+  const dispatch = useAppDispatch();
+
 
   useEffect(() => {
     dispatch(fetchPromoFilmAction());
@@ -26,7 +27,6 @@ function MainScreen(): JSX.Element {
 
   if (isDataLoadingPromoFilm) {
     return <Spiner />;
-    // Добавить обработку ошибок
   }
 
   return (

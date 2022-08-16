@@ -1,13 +1,12 @@
-/* eslint-disable no-console */
 import { useRef, FormEvent } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 
 function SignInForm(): JSX.Element {
+  const dispatch = useAppDispatch();
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const dispatch = useAppDispatch();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));

@@ -27,11 +27,11 @@ function AddReviewForm(props: AddReviewItemProps): JSX.Element {
   const formSentCondition = isMessageEntered && isRatingSelected;
 
 
-  const handleRatingChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setRating(Number(evt.target.value));
   };
 
-  const handleReviewChange = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTextareaChange = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
     const value = target.value;
     setUserReview(value);
   };
@@ -69,7 +69,7 @@ function AddReviewForm(props: AddReviewItemProps): JSX.Element {
                   name="rating"
                   value={id}
                   checked={id === userRating}
-                  onChange={handleRatingChange}
+                  onChange={handleInputChange}
                 />
                 <label className="rating__label" htmlFor={`star-${id}`}>
                   {`Rating-${id}`}
@@ -87,7 +87,7 @@ function AddReviewForm(props: AddReviewItemProps): JSX.Element {
             name="review-text"
             id="review-text"
             placeholder={userReview}
-            onChange={handleReviewChange}
+            onChange={handleTextareaChange}
           >
           </textarea>
           <div className="add-review__submit">

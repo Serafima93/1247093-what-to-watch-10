@@ -17,13 +17,13 @@ import Spiner from '../../components/spiner/spiner';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 
 function Film(): JSX.Element {
-  const { id } = useParams();
-  const dispatch = useAppDispatch();
+  const error = useAppSelector(getError);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoadingFilm = useAppSelector(getLoadedDataStatusFilm);
-  const error = useAppSelector(getError);
-
   const filmExample = useAppSelector(getFilm);
+
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
 
   useEffect(() => {
     dispatch(fetchFilmAction(id as string));
@@ -32,7 +32,6 @@ function Film(): JSX.Element {
 
   if (isDataLoadingFilm) {
     return <Spiner />;
-    // Добавить обработку ошибок если с сервера
   }
   if(error !== null) {
     return <NotFoundScreen />;

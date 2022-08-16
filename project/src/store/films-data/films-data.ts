@@ -102,6 +102,5 @@ export const filmsData = createSlice({
         state.promoFilm = action.payload;
         state.isDataLoadingPromo = false;
       });
-    // Что ты имеешь в виду под полным стейтом? - например state из film-process - state.MaxFilms
   },
 });

@@ -12,10 +12,11 @@ type FilmCardProps = {
 };
 
 function FilmCard(props: FilmCardProps): JSX.Element {
+  const { filmCard } = props;
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { filmCard } = props;
   const [userMouse, setUserMouse] = useState(filmCard);
   const [isVisibleFilmInfo, setVisibleFilmInfo] = useState(true);
 
@@ -26,7 +27,7 @@ function FilmCard(props: FilmCardProps): JSX.Element {
     }, 1000);
   };
 
-  const handleFilmCardClick = () => {
+  const handleArticleFilmCardClick = () => {
     navigate(`/films/${filmCard.id}`);
     dispatch(resetFilmsData());
     dispatch(resetFilms());
@@ -38,7 +39,7 @@ function FilmCard(props: FilmCardProps): JSX.Element {
       className="small-film-card catalog__films-card"
       onMouseEnter={handleMouseInter}
       onMouseLeave={() => {setVisibleFilmInfo(!isVisibleFilmInfo);}}
-      onClick={handleFilmCardClick}
+      onClick={handleArticleFilmCardClick}
     >
       <div className="small-film-card__image">
         {isVisibleFilmInfo ? (

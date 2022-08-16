@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { FilmStructure } from '../../types/films';
 import { getTimeFromMins } from '../../utils';
 

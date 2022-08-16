@@ -13,9 +13,9 @@ import {
 import { fetchFavoriteFilmsAction } from '../../store/api-actions';
 
 function MyList(): JSX.Element {
-  const dispatch = useAppDispatch();
   const films = useAppSelector(getFavotiteFilms);
   const isDataLoadingFavorite = useAppSelector(getLoadedDataStatusFavorite);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchFavoriteFilmsAction());

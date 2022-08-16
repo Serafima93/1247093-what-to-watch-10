@@ -1,3 +1,5 @@
+import { FilmRatingInWords } from './const';
+
 export function getTimeFromMins(mins: number) {
   const hours = Math.trunc(mins / 60);
   const minutes = mins % 60;
@@ -6,16 +8,16 @@ export function getTimeFromMins(mins: number) {
 
 export const getFilmRating = (rating: number) => {
   if (rating === 10) {
-    return 'Awesome';
+    return FilmRatingInWords.Awesome;
   }
   if (rating > 8) {
-    return 'Very good';
+    return FilmRatingInWords.VeryGood;
   }
   if (rating > 5) {
-    return 'Good';
+    return FilmRatingInWords.Good;
   }
   if (rating > 3) {
-    return 'Normal';
+    return FilmRatingInWords.Normal;
   }
-  return 'Bad';
+  return FilmRatingInWords.Bad;
 };

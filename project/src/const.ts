@@ -67,4 +67,10 @@ export enum CommentLength {
   MaxLength = 400,
 }
 
-
+export const enum FilmRatingInWords {
+  Awesome = 'Awesome',
+  VeryGood = 'Very good',
+  Good = 'Good',
+  Normal = 'Normal',
+  Bad = 'Bad',
+}

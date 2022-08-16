@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect } from 'react';
 import { FilmStructure, Films } from '../../types/films';
 import { useNavigate } from 'react-router-dom';
@@ -52,15 +51,11 @@ function Buttons(props: ButtonsProps): JSX.Element {
   const onClick = (favoriteFilmData: FavoriteFilmData) => {
     dispatch(addFavoriteFilmAction(favoriteFilmData));
     if (inList === true) {
-      console.log(inList);
-      console.log(length++);
       setfilmsCount(length = length - 1);
       setInList(!inList);
 
     } else {
-      console.log(inList);
       setfilmsCount(length = length + 1);
-      console.log(length--);
       setInList(!inList);
     }
   };

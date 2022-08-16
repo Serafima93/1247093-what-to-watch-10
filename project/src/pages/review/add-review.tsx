@@ -17,10 +17,10 @@ import { fetchFilmAction } from '../../store/api-actions';
 function AddReview(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoadingFilm = useAppSelector(getLoadedDataStatusFilm);
-
-  const { id } = useParams();
-  const dispatch = useAppDispatch();
   const filmExample = useAppSelector(getFilm);
+
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
 
   useEffect(() => {
     dispatch(fetchFilmAction(id as string));
