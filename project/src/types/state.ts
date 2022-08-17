@@ -1,7 +1,6 @@
 import { store } from '../store/index.js';
 import { FilmsCountForView, AuthorizationStatus } from '../const';
-import { Films } from './films';
-import { reviews } from '../mocks/reviews';
+import { Films, FilmStructure, FilmComment } from './films';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -12,12 +11,24 @@ export type FilmsData = {
   allFilmsList: Films;
   isDataLoading: boolean;
   genreFromState: string;
-
+  // film: FilmStructure;
+  similarListFromState: Films;
+  commentsList: FilmComment[];
+  favoriteFilms: Films;
+  promoFilm: FilmStructure;
+  // isDataLoadingFilm: boolean;
+  isDataLoadingPromo: boolean;
+  isDataLoadingSimilarFilms: boolean;
+  isDataLoadingComments: boolean;
+  isDataLoadingFavoriteFilms: boolean;
+};
+export type FilmData = {
+  film: FilmStructure;
+  error: boolean;
 };
 
 export type FilmProcess = {
   tabFromState: string;
-  allReviewsList: typeof reviews;
   MaxFilms: FilmsCountForView;
   MinFilms: FilmsCountForView;
   StepFilms: FilmsCountForView.Step;

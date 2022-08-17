@@ -1,7 +1,6 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeTab } from '../../store/actions';
-import { gettabFromState } from '../../store/films-process/selectors';
+import { getTabFromState } from '../../store/films-process/selectors';
 
 type TabMeaning = {
   tabMeaning: string;
@@ -9,8 +8,8 @@ type TabMeaning = {
 
 function Tab(props: TabMeaning): JSX.Element {
   const { tabMeaning } = props;
+  const tabFromState = useAppSelector(getTabFromState);
   const dispatch = useAppDispatch();
-  const tabFromState = useAppSelector(gettabFromState);
 
   return (
     <>
@@ -22,7 +21,6 @@ function Tab(props: TabMeaning): JSX.Element {
         }
       >
         <a
-          // href="#"
           className="film-nav__link"
           onClick={() => {
             dispatch(changeTab(tabMeaning));

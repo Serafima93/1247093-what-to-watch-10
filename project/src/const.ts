@@ -22,8 +22,8 @@ export const ButtonCondition = {
 
 export enum FilmsCountForView {
   Min = 0,
-  Max = 4,
-  Step = 4,
+  Max = 8,
+  Step = 8,
   Similar = 4,
 }
 
@@ -37,18 +37,42 @@ export enum APIRoute {
   Films = '/films',
   Login = '/login',
   Logout = '/logout',
+  Favorite = '/favorite',
+  PromoFilm = '/promo',
 }
 
 export enum NameSpace {
   Data = 'DATA',
   Film = 'FILM',
   User = 'USER',
+  FilmFromServer = 'FILM_SERVER',
 }
 
 export const HeaderCondition = {
   Main: true,
   Film: false,
 };
+
 export const isCheckedAuth = (
   authorizationStatus: AuthorizationStatus
 ): boolean => authorizationStatus === AuthorizationStatus.Unknown;
+
+export enum FavoriteFilm {
+  OnServer = 0,
+  NotOnServer = 1,
+}
+
+export enum CommentLength {
+  MinLength = 50,
+  MaxLength = 400,
+}
+
+export const enum FilmRatingInWords {
+  Awesome = 'Awesome',
+  VeryGood = 'Very good',
+  Good = 'Good',
+  Normal = 'Normal',
+  Bad = 'Bad',
+}
+
+export const idForCheck = -1;

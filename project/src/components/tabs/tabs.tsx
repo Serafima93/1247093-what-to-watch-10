@@ -1,21 +1,22 @@
-import { FilmStructure, FilmReview } from '../../types/films';
+import { FilmStructure, FilmComment } from '../../types/films';
 import Tab from '../tabs/tab-button';
 import Details from './details';
 import ReviewList from './reviews';
 import Overview from './overview';
 import { TabsSections} from '../../const';
 import { useAppSelector } from '../../hooks';
-import { gettabFromState, getallReviewsList } from '../../store/films-process/selectors';
+import { getTabFromState } from '../../store/films-process/selectors';
+import { getCommentsList } from '../../store/films-data/selectors';
 
 type FilmProps = {
   filmExample: FilmStructure;
 };
 
 function Tabs(props: FilmProps): JSX.Element {
-
   const { filmExample } = props;
-  const reviewsStructure: FilmReview[] = useAppSelector(getallReviewsList);
-  const tabFromState = useAppSelector(gettabFromState);
+
+  const comments: FilmComment[] = useAppSelector(getCommentsList);
+  const tabFromState = useAppSelector(getTabFromState);
 
   const tabsSectionsArray = Object.values(TabsSections);
 
@@ -34,8 +35,8 @@ function Tabs(props: FilmProps): JSX.Element {
         <Details detailedCardStructure={filmExample} />
       )}
       {tabFromState === TabsSections.Reviews &&
-        reviewsStructure.map((item) => (
-          <ReviewList reviewExample={item} key={item.id + 1} />
+        comments.map((item) => (
+          <ReviewList reviewExample={item} key={item.id} />
         ))}
     </div>
   );

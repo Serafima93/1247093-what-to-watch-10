@@ -1,19 +1,33 @@
-/* eslint-disable no-console */
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import Catalog from '../../components/catalog/catalog';
 import FilmCardDescp from '../../components/film-card/film-card-desc';
 import FilmCardPoster from '../../components/film-card/film-card-poster';
-import { useAppSelector } from '../../hooks';
+import Spiner from '../../components/spiner/spiner';
+import { useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { AuthorizationStatus, HeaderCondition } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { getallFilmsList } from '../../store/films-data/selectors';
+import {
+  getPromoFilm,
+  getLoadedDataStatusPromo,
+} from '../../store/films-data/selectors';
+import { fetchPromoFilmAction } from '../../store/api-actions';
 
 function MainScreen(): JSX.Element {
-  const allFilmListFromState = useAppSelector(getallFilmsList);
+  const filmCard = useAppSelector(getPromoFilm);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isDataLoadingPromoFilm = useAppSelector(getLoadedDataStatusPromo);
+  const dispatch = useAppDispatch();
 
-  const filmCard = allFilmListFromState[0];
+
+  useEffect(() => {
+    dispatch(fetchPromoFilmAction());
+  }, [dispatch]);
+
+  if (isDataLoadingPromoFilm) {
+    return <Spiner />;
+  }
 
   return (
     <>

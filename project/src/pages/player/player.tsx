@@ -1,25 +1,25 @@
-/* eslint-disable no-console */
-import { FilmStructure } from '../../types/films';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
-import { useAppSelector } from '../../hooks';
-
-import { getallFilmsList } from '../../store/films-data/selectors';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { getFilm, getError } from '../../store/film-data/selectors';
+import Spiner from '../../components/spiner/spiner';
+import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
+import { fetchFilmAction } from '../../store/api-actions';
+import { idForCheck } from '../../const';
+import dayjs from 'dayjs';
 
 function Player(): JSX.Element {
-  const filmsList = useAppSelector(getallFilmsList);
-
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const error = useAppSelector(getError);
+  const filmExample = useAppSelector(getFilm);
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
-
+  const [timeLeft, setTimeLeft] = useState<string | null>(null);
+  const [currentPosition, setCurrentPosition] = useState(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  const navigate = useNavigate();
-  const params = useParams();
-
-  const filmExample = filmsList.find(
-    (item) => item.id === Number(params.id)
-  ) as FilmStructure;
+  const progressRef = useRef<HTMLProgressElement | null>(null);
 
   useEffect(() => {
     if (videoRef.current === null) {
@@ -34,25 +34,61 @@ function Player(): JSX.Element {
     videoRef.current.pause();
   }, [isPlaying]);
 
+  useEffect(() => {
+    dispatch(fetchFilmAction(id as string));
+  }, [dispatch, id]);
+
+  const getTimeLeft = (currentTime: number, runTime: number): void => {
+    const currentTimeLeft = (runTime - currentTime) * 1000;
+    let timeLeftFormat = 'hh:mm:ss';
+    if (currentTimeLeft < 3600000) {
+      timeLeftFormat = 'mm:ss';
+    }
+    setTimeLeft(dayjs(currentTimeLeft).format(timeLeftFormat));
+  };
+
+  if(error && filmExample.id === idForCheck) {
+    return <NotFoundScreen />;
+  }
+
+  if (filmExample.id === idForCheck) {
+    return <Spiner />;
+  }
+
+  const handleButtonExit = () => {
+    setIsPlaying(false);
+    navigate('/');
+  };
+
+  const handleVideoTimeUpdate = (
+    evt: React.SyntheticEvent<HTMLVideoElement, Event>
+  ) => {
+    if (videoRef.current !== null) {
+      setCurrentPosition(
+        Number((videoRef.current.currentTime * 100) / videoRef.current.duration)
+      );
+      getTimeLeft(videoRef.current.currentTime, videoRef.current.duration);
+    }
+  };
+
+  const handleButtonFullScreen = () => {
+    if (videoRef.current !== null) {
+      videoRef.current.requestFullscreen();
+    }
+  };
+
   return (
     <div className="player">
       <video
-        autoPlay
         muted
         src={filmExample.videoLink}
         className="player__video"
         poster={filmExample.previewImage}
         ref={videoRef}
+        onTimeUpdate={handleVideoTimeUpdate}
       >
       </video>
-      <button
-        type="button"
-        className="player__exit"
-        onClick={() => {
-          setIsPlaying(false);
-          navigate('/');
-        }}
-      >
+      <button type="button" className="player__exit" onClick={handleButtonExit}>
         Exit
       </button>
 
@@ -60,16 +96,20 @@ function Player(): JSX.Element {
         <div className="player__controls-row">
           <div className="player__time">
             <progress
+              ref={progressRef}
               className="player__progress"
-              value="30"
+              value="0"
               max="100"
             >
             </progress>
-            <div className="player__toggler" style={{ left: '30%' }}>
+            <div
+              className="player__toggler"
+              style={{ left: `${currentPosition}%` }}
+            >
               Toggler
             </div>
           </div>
-          <div className="player__time-value">{filmExample.runTime}</div>
+          <div className="player__time-value">{timeLeft}</div>
         </div>
 
         <div className="player__controls-row">
@@ -87,7 +127,12 @@ function Player(): JSX.Element {
           <div className="player__name">Transpotting</div>
 
           <button type="button" className="player__full-screen">
-            <svg viewBox="0 0 27 27" width="27" height="27">
+            <svg
+              viewBox="0 0 27 27"
+              width="27"
+              height="27"
+              onClick={handleButtonFullScreen}
+            >
               <use xlinkHref="#full-screen"></use>
             </svg>
             <span>Full screen</span>

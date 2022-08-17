@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { FilmsCountForView, ButtonCondition, NameSpace } from '../../const';
 import { FilmProcess } from '../../types/state';
-import { reviews } from '../../mocks/reviews';
 import {
   loadMoreFilms,
   changeFilmsCount,
@@ -12,7 +11,6 @@ import {
 
 const initialState: FilmProcess = {
   tabFromState: 'Overview',
-  allReviewsList: reviews,
   MaxFilms: FilmsCountForView.Max,
   MinFilms: FilmsCountForView.Min,
   StepFilms: FilmsCountForView.Step,
@@ -42,7 +40,6 @@ export const filmProcess = createSlice({
         state.MaxFilms = FilmsCountForView.Max;
         state.MinFilms = FilmsCountForView.Min;
         state.StepFilms = FilmsCountForView.Step;
-        state.allReviewsList = reviews;
         state.tabFromState = 'Overview';
       });
   },

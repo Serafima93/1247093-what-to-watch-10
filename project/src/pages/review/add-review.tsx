@@ -1,28 +1,43 @@
-/* eslint-disable no-console */
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import AddReviewForm from '../../components/add-review-item/add-review-item';
 import UserBlock from '../../components/user-block/user-block';
 import LoginAvatar from '../../components/user-block/login-avatar';
 import FilmCardPoster from '../../components/film-card/film-card-poster';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
-import { FilmStructure } from '../../types/films';
-import { useParams } from 'react-router-dom';
-import { AuthorizationStatus } from '../../const';
-import { useAppSelector } from '../../hooks';
+import Spiner from '../../components/spiner/spiner';
+import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
+import { AuthorizationStatus, idForCheck } from '../../const';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { getallFilmsList } from '../../store/films-data/selectors';
+import { getFilm, getError } from '../../store/film-data/selectors';
+import { fetchFilmAction } from '../../store/api-actions';
 
 function AddReview(): JSX.Element {
+  const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const allFilmListFromState = useAppSelector(getallFilmsList);
+  const filmExample = useAppSelector(getFilm);
+  const error = useAppSelector(getError);
+  const { id } = useParams();
 
-  const params = useParams();
-  const filmExample = allFilmListFromState.find(
-    (item) => item.id === Number(params.id)
-  ) as FilmStructure;
+  useEffect(() => {
+    dispatch(fetchFilmAction(id as string));
+  }, [dispatch, id]);
+
+  if(error && filmExample.id === idForCheck) {
+    return <NotFoundScreen />;
+  }
+
+  if (filmExample.id === idForCheck) {
+    return <Spiner />;
+  }
 
   return (
-    <section className="film-card film-card--full">
+    <section
+      className="film-card film-card--full"
+      style={{ background: filmExample.backgroundColor }}
+    >
       <div className="film-card__header">
         <div className="film-card__bg">
           <img src={filmExample.previewImage} alt={filmExample.name} />

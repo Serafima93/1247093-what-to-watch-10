@@ -16,20 +16,17 @@ export type FilmStructure = {
   id: number;
   released: number;
   isFavorite: boolean;
-  mark: string;
 };
 
-
-export type FilmReview = {
+export type FilmComment = {
+  comment: string;
+  date: string;
   id: number;
+  rating: number;
   user: {
     id: number;
     name: string;
   };
-  rating: number;
-  comment: string;
-  date: string;
 };
 
 export type Films = FilmStructure[];
-

@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { FilmStructure } from '../../types/films';
 import { Link } from 'react-router-dom';
 import React from 'react';

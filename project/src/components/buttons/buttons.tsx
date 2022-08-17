@@ -1,15 +1,71 @@
-/* eslint-disable no-console */
-
-import { FilmStructure } from '../../types/films';
+import { useEffect } from 'react';
+import { FilmStructure, Films } from '../../types/films';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import {
+  addFavoriteFilmAction,
+  fetchFavoriteFilmsAction,
+} from '../../store/api-actions';
+import { FavoriteFilmData } from '../../types/favorite-film-data';
+import { getFavotiteFilms } from '../../store/films-data/selectors';
+import { FavoriteFilm } from '../../const';
 
 type ButtonsProps = {
   filmExample: FilmStructure;
 };
 
 function Buttons(props: ButtonsProps): JSX.Element {
-  const navigate = useNavigate();
   const { filmExample } = props;
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const filmsFromServer = useAppSelector(getFavotiteFilms);
+  const length = filmsFromServer.length;
+
+  const [inList, setInList] = useState(filmExample.isFavorite);
+  const [filmsCount, setfilmsCount] = useState(0);
+
+
+  useEffect(() => {
+    dispatch(fetchFavoriteFilmsAction());
+    setfilmsCount(length);
+
+  }, [dispatch, length]);
+
+
+  const getFilmStatus = (films: Films) => {
+    let filmsId: number[] = [];
+    films.forEach((item: FilmStructure) => {
+      filmsId.push(item.id);
+    });
+    filmsId = [...new Set(filmsId)];
+    if (filmsId.includes(filmExample.id)) {
+      return FavoriteFilm.OnServer;
+    } else {
+      return FavoriteFilm.NotOnServer;
+    }
+  };
+
+  const onClick = (favoriteFilmData: FavoriteFilmData) => {
+    dispatch(addFavoriteFilmAction(favoriteFilmData));
+    if (inList) {
+      setfilmsCount(filmsCount - 1);
+      setInList(!inList);
+
+    } else {
+      setfilmsCount(filmsCount + 1);
+      setInList(!inList);
+    }
+  };
+
+  const handleSubmit = () => {
+    const filmStatus = getFilmStatus(filmsFromServer);
+    onClick({
+      id: filmExample.id,
+      status: filmStatus,
+    });
+  };
 
   return (
     <>
@@ -26,13 +82,13 @@ function Buttons(props: ButtonsProps): JSX.Element {
       <button
         className="btn btn--list film-card__button"
         type="button"
-        onClick={() => navigate('/myList')}
+        onClick={handleSubmit}
       >
         <svg viewBox="0 0 19 20" width="19" height="20">
-          <use xlinkHref="#add"></use>
+          <use xlinkHref={`#${!inList ? 'add' : 'in-list'}`}></use>
         </svg>
         <span>My list</span>
-        <span className="film-card__count">9</span>
+        <span className="film-card__count">{filmsCount}</span>
       </button>
     </>
   );

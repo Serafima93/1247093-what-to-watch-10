@@ -1,10 +1,10 @@
 import Genre from '../../components/genre-list/genre';
 import { FilmStructure } from '../../types/films';
 import { useAppSelector } from '../../hooks';
-import { getallFilmsList } from '../../store/films-data/selectors';
+import { getAllFilmsList } from '../../store/films-data/selectors';
 
 function GenreList(): JSX.Element {
-  const genreListFromState = useAppSelector(getallFilmsList);
+  const genreListFromState = useAppSelector(getAllFilmsList);
 
   let filmGenreArray: string[] = ['All genres'];
   genreListFromState.forEach((item: FilmStructure) => {

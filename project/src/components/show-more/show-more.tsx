@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeFilmsCount, loadMoreFilms } from '../../store/actions';
 import { ButtonCondition } from '../../const';
@@ -7,11 +6,10 @@ import { getfilmListFromState } from '../../store/films-data/selectors';
 import { getMaxFilms, getMinFilms } from '../../store/films-process/selectors';
 
 function ShowMoreButton(): JSX.Element {
-  const dispatch = useAppDispatch();
-
   const filmsFromState = useAppSelector(getfilmListFromState);
   const incFilmsLength = useAppSelector(getMaxFilms);
   const minFilmsLength = useAppSelector(getMinFilms);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (

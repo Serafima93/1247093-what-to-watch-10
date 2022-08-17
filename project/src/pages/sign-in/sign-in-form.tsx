@@ -1,13 +1,12 @@
-/* eslint-disable no-console */
 import { useRef, FormEvent } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 
 function SignInForm(): JSX.Element {
+  const dispatch = useAppDispatch();
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const dispatch = useAppDispatch();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -51,6 +50,8 @@ function SignInForm(): JSX.Element {
             placeholder="Password"
             name="user-password"
             id="user-password"
+            // как изменить текст всплывающей подсказки?
+            pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{2,50})$"
           />
           <label
             className="sign-in__label visually-hidden"

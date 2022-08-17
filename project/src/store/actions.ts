@@ -1,7 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
-import { Films } from '../types/films';
+import { Films, FilmStructure } from '../types/films';
 import { AppRoute } from '../const';
-
 
 export const resetFilms = createAction('film/resetFilms');
 export const resetFilmsData = createAction('data/resetFilms');
@@ -29,3 +28,6 @@ export const setDataLoadedStatus = createAction<boolean>(
   'data/setDataLoadedStatus'
 );
 export const redirectToRoute = createAction<AppRoute>('film/redirectToRoute');
+export const loadFilmById = createAction<FilmStructure>('data/loadFilmById');
+export const isErrorResponseAction = createAction<boolean>('data/loadingError');
+export const clearResponseErrorAction = createAction('data/clearloadingError');
