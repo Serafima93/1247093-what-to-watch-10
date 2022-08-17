@@ -21,18 +21,17 @@ function Buttons(props: ButtonsProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const filmsFromServer = useAppSelector(getFavotiteFilms);
-  let length = filmsFromServer.length;
+  const length = filmsFromServer.length;
 
   const [inList, setInList] = useState(filmExample.isFavorite);
-  const [filmsCount, setfilmsCount] = useState(length);
+  const [filmsCount, setfilmsCount] = useState(0);
 
 
   useEffect(() => {
-
-    // Доделать число
     dispatch(fetchFavoriteFilmsAction());
+    setfilmsCount(length);
 
-  }, [dispatch]);
+  }, [dispatch, length]);
 
 
   const getFilmStatus = (films: Films) => {
@@ -50,12 +49,12 @@ function Buttons(props: ButtonsProps): JSX.Element {
 
   const onClick = (favoriteFilmData: FavoriteFilmData) => {
     dispatch(addFavoriteFilmAction(favoriteFilmData));
-    if (inList === true) {
-      setfilmsCount(length = length - 1);
+    if (inList) {
+      setfilmsCount(filmsCount - 1);
       setInList(!inList);
 
     } else {
-      setfilmsCount(length = length + 1);
+      setfilmsCount(filmsCount + 1);
       setInList(!inList);
     }
   };

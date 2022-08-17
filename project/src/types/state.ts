@@ -24,8 +24,7 @@ export type FilmsData = {
 };
 export type FilmData = {
   film: FilmStructure;
-  isDataLoadingFilm: boolean;
-  error: Error | null;
+  error: boolean;
 };
 
 export type FilmProcess = {

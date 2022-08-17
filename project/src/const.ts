@@ -74,3 +74,5 @@ export const enum FilmRatingInWords {
   Normal = 'Normal',
   Bad = 'Bad',
 }
+
+export const idForCheck = -1;

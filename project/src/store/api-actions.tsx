@@ -2,20 +2,18 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state.js';
 import { Films, FilmStructure, FilmComment } from '../types/films';
-import { redirectToRoute } from './actions';
+import {
+  redirectToRoute,
+  loadFilmById,
+  isErrorResponseAction,
+  clearResponseErrorAction,
+} from './actions';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AppRoute } from '../const';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { CommentData } from '../types/comment-data';
 import { FavoriteFilmData } from '../types/favorite-film-data';
-// import {
-//   loadFilmByIdRequest,
-//   loadFilmByIdSuccess,
-//   loadFilmByIdError,
-// } from './film-data/film-data';
-// import { api as API, store } from '../store';
-
 
 export const fetchFilmsAction = createAsyncThunk<
   Films,
@@ -31,32 +29,27 @@ export const fetchFilmsAction = createAsyncThunk<
 });
 
 export const fetchFilmAction = createAsyncThunk<
-  FilmStructure,
+  void,
   string,
   {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
   }
->('data/fetchFilm', async (_arg, { dispatch, extra: api }) => {
-  const { data } = await api.get<FilmStructure>(`/films/${_arg}`);
-  dispatch(fetchSimilarFilmsAction(_arg));
-  dispatch(fetchCommentsAction(_arg));
-  return data;
+>('film/fetchOpenFilm', async (id: string, { dispatch, extra: api }) => {
+  try {
+    if (!id) {
+      dispatch(isErrorResponseAction(true));
+      dispatch(clearResponseErrorAction());
+    }
+    const oneServerFilm = await api.get<FilmStructure>(`/films/${id}`);
+    dispatch(loadFilmById(oneServerFilm.data));
+    dispatch(fetchSimilarFilmsAction(id));
+    dispatch(fetchCommentsAction(id));
+  } catch {
+    dispatch(isErrorResponseAction(true));
+  }
 });
-
-// export const fetchFilmAction = createAsyncThunk(
-//   'data/fetchFilm',
-//   async (id: string) => {
-//     try {
-//       store.dispatch(loadFilmByIdRequest());
-//       const { data } = await API.get<FilmStructure>(`/films/${id}`);
-//       store.dispatch(loadFilmByIdSuccess(data));
-//     } catch (error) {
-//       store.dispatch(loadFilmByIdError(error));
-//     }
-//   }
-// );
 
 export const fetchSimilarFilmsAction = createAsyncThunk<
   Films,

@@ -1,29 +1,25 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import {
-  getFilm,
-  getLoadedDataStatusFilm,
-} from '../../store/film-data/selectors';
+import { getFilm, getError } from '../../store/film-data/selectors';
 import Spiner from '../../components/spiner/spiner';
+import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import { fetchFilmAction } from '../../store/api-actions';
+import { idForCheck } from '../../const';
 import dayjs from 'dayjs';
 
 function Player(): JSX.Element {
   const dispatch = useAppDispatch();
-
   const { id } = useParams();
+  const navigate = useNavigate();
+  const error = useAppSelector(getError);
   const filmExample = useAppSelector(getFilm);
-  const isDataLoadingFilm = useAppSelector(getLoadedDataStatusFilm);
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeLeft, setTimeLeft] = useState<string | null>(null);
   const [currentPosition, setCurrentPosition] = useState(0);
-
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const progressRef = useRef<HTMLProgressElement | null>(null);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (videoRef.current === null) {
@@ -51,9 +47,12 @@ function Player(): JSX.Element {
     setTimeLeft(dayjs(currentTimeLeft).format(timeLeftFormat));
   };
 
-  if (isDataLoadingFilm) {
+  if(error && filmExample.id === idForCheck) {
+    return <NotFoundScreen />;
+  }
+
+  if (filmExample.id === idForCheck) {
     return <Spiner />;
-    // Добавить обработку ошибок
   }
 
   const handleButtonExit = () => {

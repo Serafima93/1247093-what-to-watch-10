@@ -2,7 +2,12 @@ import { FilmData } from './../../types/state';
 import { NameSpace } from '../../const';
 import { createSlice } from '@reduxjs/toolkit';
 import { FilmStructure } from '../../types/films';
-import { fetchFilmAction } from '../api-actions';
+import {
+  loadFilmById,
+  isErrorResponseAction,
+  clearResponseErrorAction,
+} from '../actions';
+
 const filmMask: FilmStructure = {
   name: '',
   posterImage: '',
@@ -24,38 +29,24 @@ const filmMask: FilmStructure = {
 };
 
 const initialState: FilmData = {
-  isDataLoadingFilm: false,
   film: filmMask,
-  error: null,
+  error: false,
 };
 
 export const filmData = createSlice({
   name: NameSpace.FilmFromServer,
   initialState,
   reducers: {},
-  //   loadFilmByIdRequest: (state) => {
-  //     state.isDataLoadingFilm = true;
-  //   },
-  //   loadFilmByIdSuccess: (state, action) => {
-  //     state.film = action.payload;
-  //     state.isDataLoadingFilm = false;
-  //   },
-  //   loadFilmByIdError: (state, action) => {
-  //     state.isDataLoadingFilm = false;
-  //     state.error = action.payload;
-  //   },
-  // },
   extraReducers(builder) {
     builder
-      .addCase(fetchFilmAction.pending, (state) => {
-        state.isDataLoadingFilm = true;
-      })
-      .addCase(fetchFilmAction.fulfilled, (state, action) => {
+      .addCase(loadFilmById, (state, action) => {
         state.film = action.payload;
-        state.isDataLoadingFilm = false;
+      })
+      .addCase(isErrorResponseAction, (state, action) => {
+        state.error = action.payload;
+      })
+      .addCase(clearResponseErrorAction, (state) => {
+        state.error = false;
       });
   },
 });
-
-// export const { loadFilmByIdRequest, loadFilmByIdSuccess, loadFilmByIdError } =
-//   filmData.actions;

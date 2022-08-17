@@ -6,20 +6,18 @@ import MoreLikeThisFilms from '../../components/more-like-this-films/more-like-t
 import FilmCardPoster from '../../components/film-card/film-card-poster';
 import FilmCardDescp from '../../components/film-card/film-card-desc';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { AuthorizationStatus, HeaderCondition } from '../../const';
+import { AuthorizationStatus, HeaderCondition, idForCheck } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { getFilm } from '../../store/film-data/selectors';
+import { getFilm, getError} from '../../store/film-data/selectors';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchFilmAction } from '../../store/api-actions';
-import { getLoadedDataStatusFilm, getError } from '../../store/film-data/selectors';
 import Spiner from '../../components/spiner/spiner';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 
 function Film(): JSX.Element {
   const error = useAppSelector(getError);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isDataLoadingFilm = useAppSelector(getLoadedDataStatusFilm);
   const filmExample = useAppSelector(getFilm);
 
   const dispatch = useAppDispatch();
@@ -29,12 +27,12 @@ function Film(): JSX.Element {
     dispatch(fetchFilmAction(id as string));
   }, [dispatch, id]);
 
-
-  if (isDataLoadingFilm) {
-    return <Spiner />;
-  }
-  if(error !== null) {
+  if(error && filmExample.id === idForCheck) {
     return <NotFoundScreen />;
+  }
+
+  if (filmExample.id === idForCheck) {
+    return <Spiner />;
   }
 
   return (

@@ -7,28 +7,30 @@ import LoginAvatar from '../../components/user-block/login-avatar';
 import FilmCardPoster from '../../components/film-card/film-card-poster';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Spiner from '../../components/spiner/spiner';
-import { AuthorizationStatus } from '../../const';
+import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
+import { AuthorizationStatus, idForCheck } from '../../const';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { getLoadedDataStatusFilm } from '../../store/film-data/selectors';
-import { getFilm } from '../../store/film-data/selectors';
+import { getFilm, getError } from '../../store/film-data/selectors';
 import { fetchFilmAction } from '../../store/api-actions';
 
 function AddReview(): JSX.Element {
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isDataLoadingFilm = useAppSelector(getLoadedDataStatusFilm);
-  const filmExample = useAppSelector(getFilm);
-
   const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const filmExample = useAppSelector(getFilm);
+  const error = useAppSelector(getError);
   const { id } = useParams();
 
   useEffect(() => {
     dispatch(fetchFilmAction(id as string));
   }, [dispatch, id]);
 
-  if (isDataLoadingFilm) {
+  if(error && filmExample.id === idForCheck) {
+    return <NotFoundScreen />;
+  }
+
+  if (filmExample.id === idForCheck) {
     return <Spiner />;
-    // Добавить обработку ошибок
   }
 
   return (
