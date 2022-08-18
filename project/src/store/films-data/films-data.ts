@@ -11,7 +11,7 @@ import {
 import { changeGenre, resetFilmsData } from '../actions';
 import { FilmStructure } from '../../types/films';
 
-const filmMask: FilmStructure = {
+export const filmMask: FilmStructure = {
   name: '',
   posterImage: '',
   previewImage: '',
@@ -31,18 +31,16 @@ const filmMask: FilmStructure = {
   isFavorite: false,
 };
 
-const initialState: FilmsData = {
+export const initialState: FilmsData = {
   genreFromState: 'All genres',
   filmListFromState: [],
   allFilmsList: [],
   similarListFromState: [],
   isDataLoading: false,
-  // isDataLoadingFilm: false,
   isDataLoadingPromo: false,
   isDataLoadingSimilarFilms: false,
   isDataLoadingComments: false,
   isDataLoadingFavoriteFilms: false,
-  // film: filmMask,
   promoFilm: filmMask,
   commentsList: [],
   favoriteFilms: [],
@@ -93,7 +91,6 @@ export const filmsData = createSlice({
       .addCase(resetFilmsData, (state) => {
         state.filmListFromState = state.allFilmsList;
         state.genreFromState = 'All genres';
-        // пришлось поделить действие, ибо не знаю как выйти к полному стейту
       })
       .addCase(fetchPromoFilmAction.pending, (state) => {
         state.isDataLoadingPromo = true;
