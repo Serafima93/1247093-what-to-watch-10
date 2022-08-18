@@ -9,7 +9,7 @@ import {
   resetFilms,
 } from '../actions';
 
-const initialState: FilmProcess = {
+export const initialState: FilmProcess = {
   tabFromState: 'Overview',
   MaxFilms: FilmsCountForView.Max,
   MinFilms: FilmsCountForView.Min,
