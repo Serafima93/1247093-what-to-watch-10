@@ -8,7 +8,7 @@ import {
   clearResponseErrorAction,
 } from '../actions';
 
-const filmMask: FilmStructure = {
+export const filmMask: FilmStructure = {
   name: '',
   posterImage: '',
   previewImage: '',
@@ -28,7 +28,7 @@ const filmMask: FilmStructure = {
   isFavorite: false,
 };
 
-const initialState: FilmData = {
+export const initialState: FilmData = {
   film: filmMask,
   error: false,
 };
