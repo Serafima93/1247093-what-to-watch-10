@@ -1,6 +1,6 @@
 import { FilmStructure } from '../types/films';
-export const mockId = '1';
 
+export const mockId = '1';
 export const films: FilmStructure[] = [
   {
     id: 1,
