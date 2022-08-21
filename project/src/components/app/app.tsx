@@ -18,8 +18,6 @@ import { getLoadedDataStatus } from '../../store/films-data/selectors';
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoading = useAppSelector(getLoadedDataStatus);
-
-
   if (isCheckedAuth(authorizationStatus) || isDataLoading) {
     return <LoadingScreen />;
   }
@@ -52,5 +50,4 @@ function App(): JSX.Element {
     </HistoryRouter>
   );
 }
-
 export default App;
